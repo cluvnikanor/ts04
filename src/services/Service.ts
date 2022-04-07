@@ -30,6 +30,5 @@ const TutorialService = {
   remove,
   removeAll,
   findByTitle,
-  
 };
 export default TutorialService;
