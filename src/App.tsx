@@ -1,23 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, Routes } from 'react-router-dom';
+import TutorialsList from './components/Tutorials/TutorialsList';
+import AddTutorial from './components/Tutorials/AddTutorial';
+import Tutorial from './components/Tutorials/Tutorial';
+import DrawMandala from './components/Mandala/DrawMandala';
+import Navbar from './components/Navbar';
+import Register from './components/Logins/Register';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Navbar/>
+        <div className="container mt-3">
+          <Routes>
+            <Route path="/" element={<TutorialsList />} />
+            <Route path="/tutorials" element={<TutorialsList />} />
+            <Route path="/add" element={<AddTutorial />} />
+            <Route path="/mandala" element={<DrawMandala />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/tutorials/:id" element={<Tutorial />} />
+          </Routes>
+        </div>
       </header>
     </div>
   );
