@@ -19,11 +19,6 @@ function Navbar() {
     },
     {
       id: 4,
-      path: '/register',
-      text: 'Register',
-    },
-    {
-      id: 5,
       path: '/login',
       text: 'Login',
     },

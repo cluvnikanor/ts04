@@ -30,8 +30,6 @@ function TutorialsList() {
     const retrieveTutorials = () => {
         Service.getAll()
             .then((response: any) => {
-                console.log(response);
-                console.log(response.config);
                 setTutorials(response.data);
             })
             .catch((e: Error) =>

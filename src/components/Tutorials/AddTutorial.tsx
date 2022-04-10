@@ -29,7 +29,6 @@ function AddTutorial() {
 
     const saveTutorial = (e: SyntheticEvent) => {
         e.preventDefault();
-        console.log(input);
         const tutorial: ITutorialData = {
             id: null,
             title: input.title,
