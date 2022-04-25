@@ -1,0 +1,4 @@
+git add . 
+git commit -m "05"
+git push -u origin master
+git push heroku master 
