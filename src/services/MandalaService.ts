@@ -9,9 +9,19 @@ const register = (user: User) => {
     return http.post<User>(`/register`, user);
 }
 
+const logout = (token: string) => {
+    return http.get<any>(`/logout?t=${token}`);
+}
+
+const getUsers = () => {
+    return http.get<any>(`/admin/users`);
+}
+
 const MandalaService = {
     login,
     register,
+    logout,
+    getUsers,
 }
 
 export default MandalaService;

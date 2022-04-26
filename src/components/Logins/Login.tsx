@@ -123,7 +123,8 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                     onClick={handleSubmit}
                 >
                     {submitButtonText}
-                </button>            <button
+                </button>
+                <button
                     className="btn btn-link"
                     onClick={handleRegistering}
                 >

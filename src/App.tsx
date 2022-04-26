@@ -9,6 +9,8 @@ import Navbar from './components/Navbar';
 import Login from './components/Logins/Login';
 import { useEffect, useState } from 'react';
 import { User } from './components/Logins/User';
+import AdminTools from './components/Admin/AdminTools';
+import MandalaService from './services/MandalaService';
 
 
 function App() {
@@ -23,17 +25,37 @@ function App() {
     return savedUsers;
   }
 
-  const [users, setUsers] = useState<User[]>(getInitialUsers || []);
+  const retrieveUsers = () => {
+    MandalaService.getUsers()
+      .then((response: any) => {
+        setUsers(response.data);
+      })
+      .catch((e: Error) =>
+        console.log(e));
+  }
+
+  // const [users, setUsers] = useState<User[]>(getInitialUsers || []);
+  const [users, setUsers] = useState<Array<User>>([]);
   const [token, setToken] = useState(getInitialToken || '');
   const [message, setMessage] = useState('');
+  // const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
 
   useEffect(() => {
     localStorage.setItem("token", JSON.stringify(token));
   }, [token]);
 
   useEffect(() => {
-    localStorage.setItem("users", JSON.stringify(users));
+    retrieveUsers();
   }, [users]);
+
+  // useEffect(() => {
+  //   localStorage.setItem("users", JSON.stringify(users));
+  // }, [users]);
+
+  const handleUsers = (usersList: User[]) => {
+    setUsers(usersList);
+  }
 
   const handleToken = (token: string) => {
     setToken(token);
@@ -57,8 +79,14 @@ function App() {
               <Login
                 getToken={handleToken}
                 getLoginMessage={handleLoginMessage}
-              />
-            } />
+              />} />
+            {isAdmin &&
+              <Route path="/admin" element={
+                <AdminTools
+                  adminToken={token}
+                  users={users}
+                  getUsersList={handleUsers}
+                />} />}
             <Route path="/tutorials/:id" element={<Tutorial />} />
           </Routes>
         </div>

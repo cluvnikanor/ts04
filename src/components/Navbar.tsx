@@ -2,25 +2,30 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const links = [
-    {
-      id: 1,
-      path: '/tutorials',
-      text: 'Tutorials',
-    },
-    {
-      id: 2,
-      path: '/add',
-      text: 'Add',
-    },
+    // {
+    //   id: 1,
+    //   path: '/tutorials',
+    //   text: 'Tutorials',
+    // },
+    // {
+    //   id: 2,
+    //   path: '/add',
+    //   text: 'Add',
+    // },
     {
       id: 3,
       path: '/mandala',
-      text: 'Mandala',
+      text: 'מנדלה',
     },
     {
       id: 4,
       path: '/login',
-      text: 'Login',
+      text: 'כניסה',
+    },
+    {
+      id: 5,
+      path: '/Admin',
+      text: 'כלי ניהול',
     },
   ]
   return (

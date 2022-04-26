@@ -12,18 +12,6 @@ function TutorialsList() {
         retrieveTutorials();
     }, []);
 
-    // const onCloseAlert = () => {
-    //     setAlert({
-    //         ...alert,
-    //         show: false,
-    //     })
-    // }
-    // const onShowAlert = () => {
-    //     setAlert({
-    //         ...alert,
-    //         show: true,
-    //     })
-    // }
     const handleCheck = (id: number) => {
         setSelectedTutorial(id);
     }
