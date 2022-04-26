@@ -71,7 +71,7 @@ function App() {
         <Navbar />
         <div className="container mt-3">
           <Routes>
-            <Route path="/" element={<TutorialsList />} />
+            {/* <Route path="/" element={<DrawMandala />} /> */}
             <Route path="/tutorials" element={<TutorialsList />} />
             <Route path="/add" element={<AddTutorial />} />
             <Route path="/mandala" element={<DrawMandala />} />
@@ -87,7 +87,7 @@ function App() {
                   users={users}
                   getUsersList={handleUsers}
                 />} />}
-            <Route path="/tutorials/:id" element={<Tutorial />} />
+            {/* <Route path="/tutorials/:id" element={<Tutorial />} /> */}
           </Routes>
         </div>
         <p>{message}</p>
