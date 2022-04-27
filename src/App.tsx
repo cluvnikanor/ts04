@@ -1,9 +1,6 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from 'react-router-dom';
-import TutorialsList from './components/Tutorials/TutorialsList';
-import AddTutorial from './components/Tutorials/AddTutorial';
-import Tutorial from './components/Tutorials/Tutorial';
 import DrawMandala from './components/Mandala/DrawMandala';
 import Navbar from './components/Navbar';
 import Login from './components/Logins/Login';
@@ -72,8 +69,6 @@ function App() {
         <div className="container mt-3">
           <Routes>
             <Route path="/" element={<DrawMandala />} />
-            {/* <Route path="/tutorials" element={<TutorialsList />} /> */}
-            <Route path="/add" element={<AddTutorial />} />
             <Route path="/mandala" element={<DrawMandala />} />
             <Route path="/login" element={
               <Login
@@ -87,7 +82,6 @@ function App() {
                   users={users}
                   getUsersList={handleUsers}
                 />} />}
-            {/* <Route path="/tutorials/:id" element={<Tutorial />} /> */}
           </Routes>
         </div>
         <p>{message}</p>
