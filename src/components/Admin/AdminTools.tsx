@@ -1,21 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MandalaService from "../../services/MandalaService";
-import { User } from "../Logins/User";
+import { User } from "../../types/User";
 
 interface AdminToolsProps {
     adminToken: string;
-    users: User[];
-    getUsersList: (usersList: User[]) => void;
-
+    // users: User[];
+    isAdmin: boolean;
+    // getUsersList: (usersList: User[]) => void;
 }
 
-function AdminTools({ adminToken, users, getUsersList }: AdminToolsProps) {
+function AdminTools({ adminToken, isAdmin, }: AdminToolsProps) {
 
     const [selectedUser, setSelectedUser] = useState(NaN);
+    const [confirm, setConfirm] = useState(false);
+    const [users, setUsers] = useState<Array<User>>([]);
     // const [showUsers, setShowUsers] = useState(false);
+
+    useEffect(() => {
+        retrieveUsers();
+    }, [users]);
+
+    const retrieveUsers = () => {
+        MandalaService.getUsers()
+            .then((response: any) => {
+                setUsers(response.data);
+            })
+            .catch((e: Error) =>
+                console.log(e));
+    }
 
     const handleCheck = (id: number) => {
         setSelectedUser(id);
+    }
+
+    const handleDeleting = () => {
+        
+        setConfirm(prev => !prev);
+    }
+
+    const deleteUser = () => {
+        setConfirm(prev => !prev);
+        MandalaService.removeUser(users[selectedUser].id, adminToken);
     }
 
     return (
@@ -23,30 +48,59 @@ function AdminTools({ adminToken, users, getUsersList }: AdminToolsProps) {
             <h1>כלי ניהול</h1>
             <h2>משתמשים</h2>
             {users &&
-                <table className="table table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            <th scope="col">שם</th>
-                            <th scope="col">אתר</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        {users.map((user, index) => (
-                            <tr
-                                key={index}>
-                                <td><input
-                                    type="checkbox"
-                                    checked={index === selectedUser}
-                                    onChange={() => handleCheck(index)}
-                                /></td >
-                                <td>{user.name}</td>
-                                <td>{user.site}</td>
+                <>
+                    <table className="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">שם</th>
+                                <th scope="col">אתר</th>
+                                {isAdmin &&
+                                    <th scope="col"></th>
+                                }
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                            {users.map((user, index) => (
+                                <tr
+                                    key={index}>
+
+                                    <td>{user.name}</td>
+                                    <td>{user.site}</td>
+                                    {isAdmin &&
+                                        <td><input
+                                            type="checkbox"
+                                            checked={index === selectedUser}
+                                            onChange={() => handleCheck(index)}
+                                        /></td >
+                                    }
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <button
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={handleDeleting}
+                    >Delete
+                    </button>
+                    {confirm &&
+                        <div className="alert alert-danger" role="alert">
+                            Are you sure?
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={deleteUser}
+                            >Delete
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => handleDeleting()}
+                            >Cancel
+                            </button>
+                        </div>}
+                </>
             }
         </>
     )

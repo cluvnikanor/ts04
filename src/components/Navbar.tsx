@@ -1,26 +1,23 @@
 import { Link } from "react-router-dom";
 
-function Navbar() {
+interface NavbarProps {
+  headerMessage: string;
+  isLogin: boolean;
+  logout: () => void;
+}
+
+function Navbar({ headerMessage, isLogin, logout }: NavbarProps) {
+
   const links = [
-    // {
-    //   id: 1,
-    //   path: '/tutorials',
-    //   text: 'Tutorials',
-    // },
-    // {
-    //   id: 2,
-    //   path: '/add',
-    //   text: 'Add',
-    // },
     {
       id: 3,
       path: '/mandala',
-      text: 'מנדלה',
+      text: 'מנדלות',
     },
     {
       id: 4,
-      path: '/login',
-      text: 'כניסה',
+      path: isLogin ? '/' : '/login',
+      text: isLogin ? 'יציאה' : 'כניסה',
     },
     {
       id: 5,
@@ -28,16 +25,27 @@ function Navbar() {
       text: 'כלי ניהול',
     },
   ]
+
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark">
       <div className="navbar-nav mr-auto">
         {links.map(link =>
           <li key={link.id}>
-            <Link to={link.path} className="nav-link">
-              {link.text}
-            </Link>
+            {link.text == 'יציאה' ?
+              <Link
+                onClick={logout}
+                to={link.path} className="nav-link">
+                {link.text}
+              </Link>
+              :
+              <Link
+                to={link.path} className="nav-link">
+                {link.text}
+              </Link>
+            }
           </li>
         )}
+        {headerMessage}
       </div>
     </nav>
   )

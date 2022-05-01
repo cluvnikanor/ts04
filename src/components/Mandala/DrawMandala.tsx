@@ -1,9 +1,20 @@
+import { useEffect } from 'react';
 import { Line } from 'react-lineto';
+import { Mandala } from '../../types/Mandala';
 import CircleButton from './CircleButton';
 import { CircleButtonProps } from './CircleButtonProps'
 import { LineProps } from './LineProps';
 
-function DrawMandala() {
+interface drawMandalaProps {
+    mandala: Mandala;
+}
+
+function DrawMandala({ mandala }: drawMandalaProps) {
+
+    useEffect(() => {
+        console.log(mandala);
+    }, []);
+
     const style = {
         className: 'line',
         delay: 0,
@@ -51,7 +62,7 @@ function DrawMandala() {
         drawLine(circles[2], circles[4], 64),
         drawLine(circles[2], circles[5], 64),
         drawLine(circles[3], circles[6], 64),
-        drawLine(circles[3], circles[7], 64),        
+        drawLine(circles[3], circles[7], 64),
         drawLine(circles[0], circles[8], 64),
         drawLine(circles[8], circles[9], 64),
         drawLine(circles[8], circles[10], 64),
@@ -60,6 +71,14 @@ function DrawMandala() {
         drawLine(circles[10], circles[13], 64),
         drawLine(circles[10], circles[14], 64),
     ]
+
+    const handleActivate = (circleClassName: string) => {
+        // return (
+        //     mandala.publicUsers ?
+        //         mandala.publicUsers[circleClassName as unknown as number] ?
+        //             true : false
+        //         : false)
+    }
 
     return (
         <>
@@ -82,7 +101,12 @@ function DrawMandala() {
                     title={i.title}
                     left={i.left}
                     top={i.top}
-                    isActive={false}
+                    isActive={
+                        mandala.publicUsers ?
+                            mandala.publicUsers[i.className as unknown as number] ?
+                                true : false
+                            : false}
+                    activate={() => handleActivate(i.className)}
                 />
             ))}
         </>

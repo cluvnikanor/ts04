@@ -1,7 +1,12 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import MandalaService from "../../services/MandalaService";
-import { LoginProps } from "./LoginProps";
-import { User } from "./User";
+// import { LoginProps } from "./LoginProps";
+import { User } from "../../types/User";
+
+interface LoginProps {
+    getToken: (token: string) => void;
+    getLoginMessage: (loginMessage: string) => void;
+}
 
 function Login({ getToken, getLoginMessage }: LoginProps) {
 
@@ -39,19 +44,25 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
     }
 
     const loginUser = () => {
-        MandalaService.login(input.email, input.password)
-            .then((response: any) => {
-                getToken(response.data.token);
-                getLoginMessage(response.data.message);
-            })
+        {
+            input.email && input.password &&
+                MandalaService.login(input.email, input.password)
+                    .then((response: any) => {
+                        getToken(response.data.token);
+                        getLoginMessage(response.data.message);
+                    })
+        }
     }
 
     const registerUser = () => {
-        MandalaService.register(input)
-            .then((response: any) => {
-                getToken(response.data.token);
-                getLoginMessage(response.data.message);
-            })
+        {
+            input.email && input.password && input.name && input.site &&
+            MandalaService.register(input)
+                .then((response: any) => {
+                    getToken(response.data.token);
+                    getLoginMessage(response.data.message);
+                })
+        }
     }
 
     return (
@@ -70,7 +81,6 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                                 type="text"
                                 className="form-control"
                                 id="name"
-                                // aria-describedby="emailHelp" 
                                 placeholder="Enter name"
                                 value={input.name}
                                 onChange={handleInputChange} />
@@ -82,7 +92,6 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                                 type="text"
                                 className="form-control"
                                 id="site"
-                                // aria-describedby="emailHelp" 
                                 placeholder="Enter site"
                                 value={input.site}
                                 onChange={handleInputChange} />

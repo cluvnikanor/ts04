@@ -5,82 +5,133 @@ import DrawMandala from './components/Mandala/DrawMandala';
 import Navbar from './components/Navbar';
 import Login from './components/Logins/Login';
 import { useEffect, useState } from 'react';
-import { User } from './components/Logins/User';
+import { User } from './types/User';
 import AdminTools from './components/Admin/AdminTools';
 import MandalaService from './services/MandalaService';
-
+import Mandalas from './components/Mandala/Mandalas';
+import { PublicUser } from './types/PublicUser';
 
 function App() {
 
-  const getInitialToken = () => {
-    const savedToken = localStorage.getItem("token") as string;
-    return savedToken;
-  }
-
-  const getInitialUsers = () => {
-    const savedUsers: User[] = JSON.parse(localStorage.getItem("users") || '{}');
-    return savedUsers;
-  }
-
-  const retrieveUsers = () => {
-    MandalaService.getUsers()
-      .then((response: any) => {
-        setUsers(response.data);
-      })
-      .catch((e: Error) =>
-        console.log(e));
-  }
-
-  // const [users, setUsers] = useState<User[]>(getInitialUsers || []);
-  const [users, setUsers] = useState<Array<User>>([]);
-  const [token, setToken] = useState(getInitialToken || '');
+  const [user, setUser] = useState(new User());
+  const [token, setToken] = useState('');
   const [message, setMessage] = useState('');
-  // const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(true);
+  const [headerMessage, setHeaderMessage] = useState('שלום אורח');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem("token", JSON.stringify(token));
-  }, [token]);
-
-  useEffect(() => {
-    retrieveUsers();
-  }, [users]);
+    setToken(localStorage.getItem("token") || '');
+    retrieveUser(localStorage.getItem("token") || '');
+  }, []);
 
   // useEffect(() => {
-  //   localStorage.setItem("users", JSON.stringify(users));
-  // }, [users]);
+  //   console.log('in useEffect[user]: user=', user);
+  // }, [user]);
 
-  const handleUsers = (usersList: User[]) => {
-    setUsers(usersList);
+  // useEffect(() => {
+  //   console.log('in useEffect[token]: token=', token);
+  // }, [token]);
+
+  // useEffect(() => {
+  //   console.log('in useEffect[token]: token=', token)
+  //   console.log('stored token = ', localStorage.getItem("token"))
+  //   token && localStorage.setItem("token", token);
+  //   console.log('stored token = ', localStorage.getItem("token"))
+  //   retrieveUser();
+  //   console.log('stored token = ', localStorage.getItem("token"))
+  //   console.log('in useEffect [token]: ', token)
+  // }, [token]);
+
+  // const retrieveUser = () => {
+  //   console.log('in retrieveUser')
+  //   const storedToken =localStorage.getItem("token");
+  //   storedToken ?
+  //     MandalaService.getUser(storedToken)
+  //       .then((response: any) => {
+  //         setUser(response.data);
+  //         response.data.name ?
+  //           setHeaderMessage('שלום ' + response.data.name)
+  //           : setHeaderMessage('שלום אורח');
+  //       })
+  //       .catch((e: Error) =>
+  //         console.log(e))
+  //     :
+  //     console.log('no token');
+  // }
+
+  const retrieveUser = (token: string) => {
+    token &&
+      MandalaService.getUser(token)
+        .then((response: any) => {
+          setUser(response.data);
+          response.data.name ?
+            setHeaderMessage('שלום ' + response.data.name)
+            : setHeaderMessage('שלום אורח');
+        })
+        .catch((e: Error) =>
+          console.log(e));
   }
 
   const handleToken = (token: string) => {
+    localStorage.setItem("token", token);
+    retrieveUser(token);
     setToken(token);
   }
 
   const handleLoginMessage = (loginMessage: string) => {
     setMessage(loginMessage);
+    setIsAdmin(loginMessage === 'Hello Admin' ?
+      true : false);
+  }
+
+  const logout = () => {
+    if (token) {
+      MandalaService.logout(token);
+      setToken('');
+      setUser(new User);
+      setHeaderMessage('שלום אורח');
+      // retrieveUser();
+      localStorage.setItem("token", '');
+    }
   }
 
   return (
     <div className="App">
       <header className="App-header">
-        <Navbar />
+        <Navbar
+          headerMessage={headerMessage}
+          isLogin={token ? true : false}
+          logout={logout}
+        />
         <div className="container mt-3">
           <Routes>
-            <Route path="/" element={<DrawMandala />} />
-            <Route path="/mandala" element={<DrawMandala />} />
-            <Route path="/login" element={
-              <Login
-                getToken={handleToken}
-                getLoginMessage={handleLoginMessage}
-              />} />
+            {/* <Route path="/mandala" element={
+              <Mandalas
+                publicUser={user as PublicUser}
+              />} /> */}
+            {["/", "/mandala", token && "/login"].map((path, index) => {
+              return (
+                <Route path={path} element={
+                  <Mandalas
+                    publicUser={user as PublicUser}
+                  />}
+                  key={index}
+                />
+              );
+            })}
+            {token }
+              <Route
+                path="/login" element={
+                  <Login
+                    getToken={handleToken}
+                    getLoginMessage={handleLoginMessage}
+                  />
+                } />
             {isAdmin &&
               <Route path="/admin" element={
                 <AdminTools
                   adminToken={token}
-                  users={users}
-                  getUsersList={handleUsers}
+                  isAdmin={isAdmin}
                 />} />}
           </Routes>
         </div>

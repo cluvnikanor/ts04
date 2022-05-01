@@ -4,15 +4,24 @@ import { CircleButtonProps } from './CircleButtonProps';
 import TakeRole from './TakeRole';
 
 
-function CircleButton(props: CircleButtonProps) {
-    const { className, color, left, top, title, isActive } = props;
-    const [showRegistration, setShowRegistration] = useState(false)
+function CircleButton({ className, color, left, top, title, isActive, activate, }: CircleButtonProps) {
+    const [showRegistration, setShowRegistration] = useState(false);
+    const [active, setActive] = useState(isActive);
 
-    let backgroundColor = isActive ? color : 'grey';
+    let backgroundColor = active ? color : 'grey';
 
     const handleClick = () => {
         setShowRegistration(prev => !prev);
+        console.log(isActive)
+        console.log(active);
     }
+
+    // const activate = () => {
+    //     setActive(true);
+    //     // setActive(prev=>!prev);
+    //     console.log(isActive)
+    //     console.log(active);
+    // }
 
     return (
         <>
@@ -34,10 +43,12 @@ function CircleButton(props: CircleButtonProps) {
                 title={title}
                 onClick={handleClick}
             >
-                {isActive || <FaPlusCircle color={color} size="40px" />}
+                {active || <FaPlusCircle color={color} size="40px" />}
             </button>
             {showRegistration &&
-                <TakeRole title={title}
+                <TakeRole
+                    title={title}
+                    activate={activate}
                 />}
         </>
     )

@@ -5,6 +5,7 @@ export class CircleButtonProps {
     top: string = '0';
     title: string = '';
     isActive: boolean = false;
+    activate: () => void;
 
     constructor(
         className: string,
@@ -13,6 +14,7 @@ export class CircleButtonProps {
         top: string,
         title: string,
         isActive?: boolean,
+        activate?: () => boolean,
     ) {
         this.className = className;
         this.color = color;
@@ -20,5 +22,6 @@ export class CircleButtonProps {
         this.top = top;
         this.title = title;
         this.isActive = isActive ? isActive : false;
+        this.activate = activate ? activate : () => { };
     }
 }

@@ -1,5 +1,5 @@
 import http from "../http-common";
-import { User } from "../components/Logins/User";
+import { User } from "../types/User";
 
 const login = (email: string, password: string) => {
     return http.get<any>(`/login?email=${email}&password=${password}`);
@@ -13,15 +13,50 @@ const logout = (token: string) => {
     return http.get<any>(`/logout?t=${token}`);
 }
 
+const getUser = (token: string) => {
+    return http.get<any>(`/user?t=${token}`);
+}
+
 const getUsers = () => {
-    return http.get<any>(`/admin/users`);
+    return http.get<any>(`/viewUsers`);
+}
+
+const removeUser = (id: any, adminToken: string) => {
+    return http.delete<any>(`/deleteUser?id=${id}&t=${adminToken}`);
+};
+
+const takeRoll = (token: string, index: number, mandalaId: string) => {
+    return http.post<any>(`/takeroll?t=${token}&i=${index}&m=${mandalaId}`);
+}
+
+const getMandala = (mandalaId: string) => {
+    return http.get<any>(`/mandala/${mandalaId}`);
+}
+
+const getMandalas = () => {
+    return http.get<any>(`/mandalas`);
+}
+
+const addMandala = () => {
+    return http.get<any>(`/addMandala`);
+}
+
+const addIdMandala = (mandalaId:string) => {
+    return http.get<any>(`/addMandala/${mandalaId}`);
 }
 
 const MandalaService = {
     login,
     register,
     logout,
+    getUser,
     getUsers,
+    removeUser,
+    takeRoll,
+    getMandala,
+    getMandalas,
+    addMandala,
+    addIdMandala,
 }
 
 export default MandalaService;
