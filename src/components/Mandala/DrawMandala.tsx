@@ -11,9 +11,9 @@ interface drawMandalaProps {
 
 function DrawMandala({ mandala }: drawMandalaProps) {
 
-    useEffect(() => {
-        console.log(mandala);
-    }, []);
+    // useEffect(() => {
+    //     console.log(mandala);
+    // }, []);
 
     const style = {
         className: 'line',
