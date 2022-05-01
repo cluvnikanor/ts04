@@ -71,8 +71,8 @@ function App() {
         <Navbar />
         <div className="container mt-3">
           <Routes>
-            {/* <Route path="/" element={<DrawMandala />} /> */}
-            <Route path="/tutorials" element={<TutorialsList />} />
+            <Route path="/" element={<DrawMandala />} />
+            {/* <Route path="/tutorials" element={<TutorialsList />} /> */}
             <Route path="/add" element={<AddTutorial />} />
             <Route path="/mandala" element={<DrawMandala />} />
             <Route path="/login" element={
