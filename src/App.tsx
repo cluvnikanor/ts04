@@ -15,7 +15,7 @@ function App() {
 
   const [user, setUser] = useState(new User());
   const [token, setToken] = useState('');
-  const [message, setMessage] = useState('');
+  // const [message, setMessage] = useState('');
   const [headerMessage, setHeaderMessage] = useState('שלום אורח');
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -28,36 +28,10 @@ function App() {
     console.log('in useEffect[user]: user=', user);
   }, [user]);
 
-  // useEffect(() => {
-  //   console.log('in useEffect[token]: token=', token);
-  // }, [token]);
-
-  // useEffect(() => {
-  //   console.log('in useEffect[token]: token=', token)
-  //   console.log('stored token = ', localStorage.getItem("token"))
-  //   token && localStorage.setItem("token", token);
-  //   console.log('stored token = ', localStorage.getItem("token"))
-  //   retrieveUser();
-  //   console.log('stored token = ', localStorage.getItem("token"))
-  //   console.log('in useEffect [token]: ', token)
-  // }, [token]);
-
-  // const retrieveUser = () => {
-  //   console.log('in retrieveUser')
-  //   const storedToken =localStorage.getItem("token");
-  //   storedToken ?
-  //     MandalaService.getUser(storedToken)
-  //       .then((response: any) => {
-  //         setUser(response.data);
-  //         response.data.name ?
-  //           setHeaderMessage('שלום ' + response.data.name)
-  //           : setHeaderMessage('שלום אורח');
-  //       })
-  //       .catch((e: Error) =>
-  //         console.log(e))
-  //     :
-  //     console.log('no token');
-  // }
+  useEffect(() => {
+    console.log('in useEffect[token]: token=', token);
+    retrieveUser(token);
+  }, [token]);
 
   const retrieveUser = (token: string) => {
     token &&
@@ -79,7 +53,7 @@ function App() {
   }
 
   const handleLoginMessage = (loginMessage: string) => {
-    setMessage(loginMessage);
+    // setMessage(loginMessage);
     setIsAdmin(loginMessage === 'Hello Admin' ?
       true : false);
   }
@@ -141,7 +115,7 @@ function App() {
                 />} />}
           </Routes>
         </div>
-        <p>{message}</p>
+        {/* <p>{message}</p> */}
       </header>
     </div>
   );

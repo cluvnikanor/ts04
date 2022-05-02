@@ -60,14 +60,15 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
     }
 
     const handleActivate = (index: number) => {
+        console.log(publicUser) 
         console.log('publicUser.roll=', publicUser.roll, 'mandala.userQuantity=', mandala?.userQuantity, 'index=', index)
         if (mandala?.id
             && (publicUser.roll > 15 || publicUser.roll < 0)
             && (mandala.userQuantity > 0 || index == 0)
             && mandala.userQuantity < 15) {
             MandalaService.takeRoll(token, index, mandala.id);
-            publicUser.roll = index;
-            publicUser.mandalaId = mandala.id;
+            // publicUser.roll = index;
+            // publicUser.mandalaId = mandala.id;
             retrieveMandala(mandala.id);
             // handlePublicUser(new PublicUser(publicUser.id, publicUser.name, publicUser.site, mandala.id, index));
         }

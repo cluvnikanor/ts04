@@ -107,7 +107,7 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
                         : false}
                     // activate={() => handleActivate(i.className)}
                     activate={() => handleActivate(i.className as unknown as number)}
-                    publicUser={publicUser}
+                    publicUser={mandala.publicUsers[i.className as unknown as number]}
                 />
             ))}
         </>
