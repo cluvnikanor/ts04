@@ -108,7 +108,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
                         </div>
                     </>}
             </>
-            // }
+            {/* } */}
         </>
     )
 }
