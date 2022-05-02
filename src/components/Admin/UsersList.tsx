@@ -48,7 +48,7 @@ function UsersList({ token, isAdmin, }: UsersListToolsProps) {
             {users &&
                 <>
                     <table className="table table-dark">
-                        <thead>
+                        {/* <thead>
                             <tr>
                                 <th scope="col">שם</th>
                                 <th scope="col">אתר</th>
@@ -56,15 +56,15 @@ function UsersList({ token, isAdmin, }: UsersListToolsProps) {
                                     <th scope="col"></th>
                                 }
                             </tr>
-                        </thead>
+                        </thead> */}
                         <tbody>
 
                             {users.map((user, index) => (
                                 <tr
                                     key={index}>
 
-                                    <td>{user.name}</td>
-                                    <td>{user.site}</td>
+                                    {/* <td>{user.name}</td> */}
+                                    <td><a href={user.site} className="link-primary">{user.name}</a></td>
                                     {isAdmin &&
                                         <td><input
                                             type="checkbox"

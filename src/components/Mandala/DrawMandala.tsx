@@ -41,22 +41,40 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
         )
     }
 
+    // const circles = [
+    //     new CircleButtonProps('0', 'yellow', '440px', '320px', 'מדריכה',),
+    //     new CircleButtonProps('1', 'pink', '620px', '320px', 'תומכת',),
+    //     new CircleButtonProps('2', 'skyblue', '710px', '175px', 'תומכת רגשית',),
+    //     new CircleButtonProps('3', 'skyblue', '710px', '465px', 'תומכת רגשית',),
+    //     new CircleButtonProps('4', 'green', '710px', '0px', 'תומכת טכנית',),
+    //     new CircleButtonProps('5', 'green', '860px', '80px', 'תומכת טכנית',),
+    //     new CircleButtonProps('6', 'green', '710px', '640px', 'תומכת טכנית',),
+    //     new CircleButtonProps('7', 'green', '860px', '560px', 'תומכת טכנית',),
+    //     new CircleButtonProps('8', 'pink', '255px', '320px', 'תומכת',),
+    //     new CircleButtonProps('9', 'skyblue', '165px', '175px', 'תומכת רגשית',),
+    //     new CircleButtonProps('10', 'skyblue', '165px', '465px', 'תומכת רגשית',),
+    //     new CircleButtonProps('11', 'green', '165px', '0px', 'תומכת טכנית',),
+    //     new CircleButtonProps('12', 'green', '15px', '80px', 'תומכת טכנית',),
+    //     new CircleButtonProps('13', 'green', '165px', '640px', 'תומכת טכנית',),
+    //     new CircleButtonProps('14', 'green', '15px', '560px', 'תומכת טכנית',),
+    // ]
+
     const circles = [
-        new CircleButtonProps('0', 'yellow', '440px', '320px', 'מדריכה',),
-        new CircleButtonProps('1', 'pink', '620px', '320px', 'תומכת',),
-        new CircleButtonProps('2', 'skyblue', '710px', '175px', 'תומכת רגשית',),
-        new CircleButtonProps('3', 'skyblue', '710px', '465px', 'תומכת רגשית',),
-        new CircleButtonProps('4', 'green', '710px', '0px', 'תומכת טכנית',),
-        new CircleButtonProps('5', 'green', '860px', '80px', 'תומכת טכנית',),
-        new CircleButtonProps('6', 'green', '710px', '640px', 'תומכת טכנית',),
-        new CircleButtonProps('7', 'green', '860px', '560px', 'תומכת טכנית',),
-        new CircleButtonProps('8', 'pink', '255px', '320px', 'תומכת',),
-        new CircleButtonProps('9', 'skyblue', '165px', '175px', 'תומכת רגשית',),
-        new CircleButtonProps('10', 'skyblue', '165px', '465px', 'תומכת רגשית',),
-        new CircleButtonProps('11', 'green', '165px', '0px', 'תומכת טכנית',),
-        new CircleButtonProps('12', 'green', '15px', '80px', 'תומכת טכנית',),
-        new CircleButtonProps('13', 'green', '165px', '640px', 'תומכת טכנית',),
-        new CircleButtonProps('14', 'green', '15px', '560px', 'תומכת טכנית',),
+        new CircleButtonProps('0', 'yellow', '440px', '380px', 'מדריכה',),
+        new CircleButtonProps('1', 'pink', '620px', '380px', 'תומכת',),
+        new CircleButtonProps('2', 'skyblue', '710px', '235px', 'תומכת רגשית',),
+        new CircleButtonProps('3', 'skyblue', '710px', '525px', 'תומכת רגשית',),
+        new CircleButtonProps('4', 'green', '710px', '60px', 'תומכת טכנית',),
+        new CircleButtonProps('5', 'green', '860px', '140px', 'תומכת טכנית',),
+        new CircleButtonProps('6', 'green', '710px', '700px', 'תומכת טכנית',),
+        new CircleButtonProps('7', 'green', '860px', '620px', 'תומכת טכנית',),
+        new CircleButtonProps('8', 'pink', '255px', '380px', 'תומכת',),
+        new CircleButtonProps('9', 'skyblue', '165px', '235px', 'תומכת רגשית',),
+        new CircleButtonProps('10', 'skyblue', '165px', '525px', 'תומכת רגשית',),
+        new CircleButtonProps('11', 'green', '165px', '60px', 'תומכת טכנית',),
+        new CircleButtonProps('12', 'green', '15px', '140px', 'תומכת טכנית',),
+        new CircleButtonProps('13', 'green', '165px', '700px', 'תומכת טכנית',),
+        new CircleButtonProps('14', 'green', '15px', '620px', 'תומכת טכנית',),
     ]
 
     const lines = [
@@ -75,6 +93,22 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
         drawLine(circles[10], circles[13], 64),
         drawLine(circles[10], circles[14], 64),
     ]
+    // const lines = [
+    //     drawLine(circles[0], circles[1], 48),
+    //     drawLine(circles[1], circles[2], 48),
+    //     drawLine(circles[1], circles[3], 48),
+    //     drawLine(circles[2], circles[4], 48),
+    //     drawLine(circles[2], circles[5], 48),
+    //     drawLine(circles[3], circles[6], 48),
+    //     drawLine(circles[3], circles[7], 48),
+    //     drawLine(circles[0], circles[8], 48),
+    //     drawLine(circles[8], circles[9], 48),
+    //     drawLine(circles[8], circles[10], 48),
+    //     drawLine(circles[9], circles[11], 48),
+    //     drawLine(circles[9], circles[12], 48),
+    //     drawLine(circles[10], circles[13], 48),
+    //     drawLine(circles[10], circles[14], 48),
+    // ]
 
     // const handleActivate = (circleClassName: string) => {
     //     // mandala.publicUsers[circleClassName as unknown as number] = publicUser;

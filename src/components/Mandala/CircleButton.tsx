@@ -33,6 +33,17 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
                     padding: 0,
                     position: 'absolute',
                 }}
+                // style={{
+                //     backgroundColor: backgroundColor,
+                //     border: `4px solid ${color}`,
+                //     left: left,
+                //     width: 96,
+                //     top: top,
+                //     height: 96,
+                //     borderRadius: 48,
+                //     padding: 0,
+                //     position: 'absolute',
+                // }}
                 type="button"
                 className={className}
                 data-toggle="tooltip" data-placement="right"
