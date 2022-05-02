@@ -84,7 +84,6 @@ function App() {
         />
         <div className="container mt-3">
           <Routes>
-<<<<<<< HEAD
             {
               token ?
                 ["/", "/mandala", "/login"].map((path, index) => {
@@ -120,16 +119,6 @@ function App() {
               <Mandalas
                 publicUser={user as PublicUser}
                 token={token}
-=======
-            <Route path="/" element={<DrawMandala />} />
-            {/* <Route path="/tutorials" element={<TutorialsList />} /> */}
-            <Route path="/add" element={<AddTutorial />} />
-            <Route path="/mandala" element={<DrawMandala />} />
-            <Route path="/login" element={
-              <Login
-                getToken={handleToken}
-                getLoginMessage={handleLoginMessage}
->>>>>>> 2a42a321d4dbabe42493df1fcf7ea5429dfbf681
               />} />
           </Routes>
         </div>
