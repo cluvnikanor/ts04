@@ -3,20 +3,20 @@ export class PublicUser {
     name = '';
     site = '';
     mandalaId = '';
-    roll = -1;
+    mandalaIndex = -1;
 
     constructor(
         id?: string | null,
         name?: string,
         site?: string,
         mandalaId?: string,
-        roll?: number,
+        mandalaIndex?: number,
 
     ) {
         this.id = id ? id : null;
         this.name = name ? name : '';
         this.site = site ? site : '';
         this.mandalaId = mandalaId ? mandalaId : '';
-        this.roll = roll ? roll : -1;
+        this.mandalaIndex = mandalaIndex ? mandalaIndex : -1;
     }
 }

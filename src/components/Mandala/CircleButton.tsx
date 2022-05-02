@@ -8,13 +8,14 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
     const [showRegistration, setShowRegistration] = useState(false);
 
     let backgroundColor = isActive ? color : 'grey';
+    const buttonTitle = publicUser.id? `${publicUser.name}\n${publicUser.site}\n${title}`:title;
 
     const handleCancel = () => {
         setShowRegistration(false);
     }
 
     const handleClick = () => {
-        (publicUser.roll > 15 || publicUser.roll < 0)
+        (publicUser.mandalaIndex > 15 || publicUser.mandalaIndex < 0)
             && setShowRegistration(true);
     }
 
@@ -35,7 +36,7 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
                 type="button"
                 className={className}
                 data-toggle="tooltip" data-placement="right"
-                title={title}
+                title={buttonTitle}
                 onClick={handleClick}
             >
                 {isActive ? publicUser.name : <FaPlusCircle color={color} size="40px" />}

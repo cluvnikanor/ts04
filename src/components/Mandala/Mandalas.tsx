@@ -59,18 +59,18 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
         retrieveMandala(mandalaId);
     }
 
-    const handleActivate = (index: number) => {
+    const handleActivate = (mandalaIndex: number) => {
         console.log(publicUser) 
-        console.log('publicUser.roll=', publicUser.roll, 'mandala.userQuantity=', mandala?.userQuantity, 'index=', index)
+        console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity, 'mandalaIndex=', mandalaIndex)
         if (mandala?.id
-            && (publicUser.roll > 15 || publicUser.roll < 0)
-            && (mandala.userQuantity > 0 || index == 0)
+            && (publicUser.mandalaIndex > 15 || publicUser.mandalaIndex < 0)
+            && (mandala.userQuantity > 0 || mandalaIndex == 0)
             && mandala.userQuantity < 15) {
-            MandalaService.takeRoll(token, index, mandala.id);
-            // publicUser.roll = index;
+            MandalaService.takeRoll(token, mandalaIndex, mandala.id);
+            // publicUser.mandalaIndex = mandalaIndex;
             // publicUser.mandalaId = mandala.id;
             retrieveMandala(mandala.id);
-            // handlePublicUser(new PublicUser(publicUser.id, publicUser.name, publicUser.site, mandala.id, index));
+            // handlePublicUser(new PublicUser(publicUser.id, publicUser.name, publicUser.site, mandala.id, mandalaIndex));
         }
     }
 
