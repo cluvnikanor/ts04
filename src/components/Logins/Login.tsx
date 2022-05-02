@@ -81,7 +81,7 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                                 type="text"
                                 className="form-control"
                                 id="name"
-                                placeholder="Enter name"
+                                placeholder="שם"
                                 value={input.name}
                                 onChange={handleInputChange} />
                         </div><div className="form-group">
@@ -92,7 +92,7 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                                 type="text"
                                 className="form-control"
                                 id="site"
-                                placeholder="Enter site"
+                                placeholder="אתר"
                                 value={input.site}
                                 onChange={handleInputChange} />
                         </div>
@@ -107,7 +107,7 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                         className="form-control"
                         id="email"
                         aria-describedby="emailHelp"
-                        placeholder="Enter email"
+                        placeholder="שם משתמש"
                         value={input.email}
                         onChange={handleInputChange}
                     />
@@ -121,7 +121,7 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                         type="password"
                         className="form-control"
                         id="password"
-                        placeholder="Password"
+                        placeholder="סיסמה"
                         value={input.password}
                         onChange={handleInputChange}
                     />

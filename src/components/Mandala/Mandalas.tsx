@@ -88,7 +88,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
                     </>
                     :
                     <>
-                        <h2>Available Mandalas</h2>
+                        <h2>מנדלות פנויות</h2>
                         <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
                             {/* {mandalas?.map(m => ( */}
                             {mandalas?.filter(m => m.userQuantity < 15)
@@ -100,7 +100,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
                                         onClick={() => handleChooseMandala(m.id as string)}
                                     >
                                         {m.userQuantity == 0 ?
-                                            'empty mandala'
+                                            'מנדלה חדשה'
                                             :
                                             m.publicUsers[0].name}
                                     </button>
