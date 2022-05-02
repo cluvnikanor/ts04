@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
 import { Line } from 'react-lineto';
 import { Mandala } from '../../types/Mandala';
+import { PublicUser } from '../../types/PublicUser';
 import CircleButton from './CircleButton';
 import { CircleButtonProps } from './CircleButtonProps'
 import { LineProps } from './LineProps';
 
 interface drawMandalaProps {
     mandala: Mandala;
+    publicUser: PublicUser;
+    handleActivate: (index: number) => void;
 }
 
-function DrawMandala({ mandala }: drawMandalaProps) {
+function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) {
 
     // useEffect(() => {
+    //     handleMandala(mandala);
     //     console.log(mandala);
-    // }, []);
+    // }, [mandala]);
 
     const style = {
         className: 'line',
@@ -72,13 +76,9 @@ function DrawMandala({ mandala }: drawMandalaProps) {
         drawLine(circles[10], circles[14], 64),
     ]
 
-    const handleActivate = (circleClassName: string) => {
-        // return (
-        //     mandala.publicUsers ?
-        //         mandala.publicUsers[circleClassName as unknown as number] ?
-        //             true : false
-        //         : false)
-    }
+    // const handleActivate = (circleClassName: string) => {
+    //     // mandala.publicUsers[circleClassName as unknown as number] = publicUser;
+    // }
 
     return (
         <>
@@ -101,12 +101,13 @@ function DrawMandala({ mandala }: drawMandalaProps) {
                     title={i.title}
                     left={i.left}
                     top={i.top}
-                    isActive={
-                        mandala.publicUsers ?
-                            mandala.publicUsers[i.className as unknown as number] ?
-                                true : false
-                            : false}
-                    activate={() => handleActivate(i.className)}
+                    isActive={mandala.publicUsers ?
+                        mandala.publicUsers[i.className as unknown as number].name ?
+                            true : false
+                        : false}
+                    // activate={() => handleActivate(i.className)}
+                    activate={() => handleActivate(i.className as unknown as number)}
+                    publicUser={publicUser}
                 />
             ))}
         </>

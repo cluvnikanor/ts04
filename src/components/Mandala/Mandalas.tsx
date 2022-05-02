@@ -6,24 +6,36 @@ import DrawMandala from "./DrawMandala";
 
 interface MandalasProps {
     publicUser: PublicUser;
+    // handlePublicUser: (publicUser: PublicUser) => void;
+    token: string;
 }
 
-function Mandalas({ publicUser }: MandalasProps) {
+function Mandalas({ publicUser, token, }: MandalasProps) {
     const [mandala, setMandala] = useState<Mandala>();
     const [mandalas, setMandalas] = useState<Array<Mandala>>([]);
 
-    useEffect(() => {
-        publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
-        mandala || retrieveMandalas();
-    }, []);
+    // useEffect(() => {
+    //     publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
+    //     mandala || retrieveMandalas();
+    // }, []);
 
     // useEffect(() => {
     //     publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
     // }, [mandalas]);
 
-    // useEffect(() => {
-    //     console.log(mandala)
-    // }, [mandala]);
+    useEffect(() => {
+        console.log(publicUser)
+        publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
+        mandala || retrieveMandalas();
+    }, [publicUser]);
+
+    useEffect(() => {
+        console.log(mandala)
+    }, [mandala]);
+
+    useEffect(() => {
+        console.log(mandalas)
+    }, [mandalas]);
 
     const retrieveMandalas = () => {
         MandalaService.getMandalas()
@@ -47,6 +59,20 @@ function Mandalas({ publicUser }: MandalasProps) {
         retrieveMandala(mandalaId);
     }
 
+    const handleActivate = (index: number) => {
+        console.log('publicUser.roll=', publicUser.roll, 'mandala.userQuantity=', mandala?.userQuantity, 'index=', index)
+        if (mandala?.id
+            && (publicUser.roll > 15 || publicUser.roll < 0)
+            && (mandala.userQuantity > 0 || index == 0)
+            && mandala.userQuantity < 15) {
+            MandalaService.takeRoll(token, index, mandala.id);
+            publicUser.roll = index;
+            publicUser.mandalaId = mandala.id;
+            retrieveMandala(mandala.id);
+            // handlePublicUser(new PublicUser(publicUser.id, publicUser.name, publicUser.site, mandala.id, index));
+        }
+    }
+
     return (
         <>
             {publicUser.id &&
@@ -55,6 +81,8 @@ function Mandalas({ publicUser }: MandalasProps) {
                         <>
                             <DrawMandala
                                 mandala={mandala}
+                                publicUser={publicUser}
+                                handleActivate={handleActivate}
                             />
                         </>
                         :
@@ -62,7 +90,7 @@ function Mandalas({ publicUser }: MandalasProps) {
                             <h2>Available Mandalas</h2>
                             <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
                                 {/* {mandalas?.map(m => ( */}
-                                {mandalas?.filter(m => !m.publicUsers || m.publicUsers.length < 15)
+                                {mandalas?.filter(m => m.userQuantity < 15)
                                     .map(m => (
                                         <button
                                             key={m.id}
@@ -70,10 +98,10 @@ function Mandalas({ publicUser }: MandalasProps) {
                                             className="btn btn-primary"
                                             onClick={() => handleChooseMandala(m.id as string)}
                                         >
-                                            {m.publicUsers?.length == 0 ?
-                                                m.publicUsers[0].name
+                                            {m.userQuantity == 0 ?
+                                                'empty mandala'
                                                 :
-                                                'empty mandala'}
+                                                m.publicUsers[0].name}
                                         </button>
                                     ))}
                             </div>

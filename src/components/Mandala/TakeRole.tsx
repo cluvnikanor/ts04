@@ -1,15 +1,18 @@
+import { PublicUser } from "../../types/PublicUser";
+
 interface TakeRoleProps {
     title: string;
     activate: () => void;
+    handleCancel: () => void;
+    publicUser: PublicUser;
 }
 
-function TakeRole({ title, activate }: TakeRoleProps) {
+function TakeRole({ title, activate, handleCancel, publicUser, }: TakeRoleProps) {
 
     const handleRegister = () => {
         activate();
+        handleCancel();
     }
-
-    const handleCancel = () => { }
 
     return (
         <>

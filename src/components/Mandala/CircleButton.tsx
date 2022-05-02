@@ -4,24 +4,19 @@ import { CircleButtonProps } from './CircleButtonProps';
 import TakeRole from './TakeRole';
 
 
-function CircleButton({ className, color, left, top, title, isActive, activate, }: CircleButtonProps) {
+function CircleButton({ className, color, left, top, title, isActive, activate, publicUser, }: CircleButtonProps) {
     const [showRegistration, setShowRegistration] = useState(false);
-    const [active, setActive] = useState(isActive);
 
-    let backgroundColor = active ? color : 'grey';
+    let backgroundColor = isActive ? color : 'grey';
 
-    const handleClick = () => {
-        setShowRegistration(prev => !prev);
-        console.log(isActive)
-        console.log(active);
+    const handleCancel = () => {
+        setShowRegistration(false);
     }
 
-    // const activate = () => {
-    //     setActive(true);
-    //     // setActive(prev=>!prev);
-    //     console.log(isActive)
-    //     console.log(active);
-    // }
+    const handleClick = () => {
+        (publicUser.roll > 15 || publicUser.roll < 0)
+            && setShowRegistration(true);
+    }
 
     return (
         <>
@@ -43,13 +38,14 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
                 title={title}
                 onClick={handleClick}
             >
-                {active || <FaPlusCircle color={color} size="40px" />}
+                {isActive ? publicUser.name : <FaPlusCircle color={color} size="40px" />}
             </button>
             {showRegistration &&
                 <TakeRole
                     title={title}
                     activate={activate}
-                />}
+                    handleCancel={handleCancel}
+                    publicUser={publicUser} />}
         </>
     )
 }

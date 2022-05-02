@@ -24,9 +24,9 @@ function App() {
     retrieveUser(localStorage.getItem("token") || '');
   }, []);
 
-  // useEffect(() => {
-  //   console.log('in useEffect[user]: user=', user);
-  // }, [user]);
+  useEffect(() => {
+    console.log('in useEffect[user]: user=', user);
+  }, [user]);
 
   // useEffect(() => {
   //   console.log('in useEffect[token]: token=', token);
@@ -95,6 +95,10 @@ function App() {
     }
   }
 
+  // const handlePublicUser = (publicUser: PublicUser) => {
+
+  // }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -114,19 +118,21 @@ function App() {
                 <Route path={path} element={
                   <Mandalas
                     publicUser={user as PublicUser}
+                    // handlePublicUser={handlePublicUser}
+                    token={token}
                   />}
                   key={index}
                 />
               );
             })}
-            {token }
-              <Route
-                path="/login" element={
-                  <Login
-                    getToken={handleToken}
-                    getLoginMessage={handleLoginMessage}
-                  />
-                } />
+            {token}
+            <Route
+              path="/login" element={
+                <Login
+                  getToken={handleToken}
+                  getLoginMessage={handleLoginMessage}
+                />
+              } />
             {isAdmin &&
               <Route path="/admin" element={
                 <AdminTools

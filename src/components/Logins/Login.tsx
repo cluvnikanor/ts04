@@ -100,7 +100,7 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                 }
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">
-                        דוא"ל
+                        שם משתמש
                     </label>
                     <input
                         type="email"

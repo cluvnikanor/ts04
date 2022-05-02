@@ -1,3 +1,5 @@
+import { PublicUser } from "../../types/PublicUser";
+
 export class CircleButtonProps {
     className: string = '';
     color: string = 'white';
@@ -6,6 +8,7 @@ export class CircleButtonProps {
     title: string = '';
     isActive: boolean = false;
     activate: () => void;
+    publicUser: PublicUser = new PublicUser;
 
     constructor(
         className: string,
@@ -15,6 +18,7 @@ export class CircleButtonProps {
         title: string,
         isActive?: boolean,
         activate?: () => boolean,
+        publicUser?: PublicUser,
     ) {
         this.className = className;
         this.color = color;
@@ -23,5 +27,6 @@ export class CircleButtonProps {
         this.title = title;
         this.isActive = isActive ? isActive : false;
         this.activate = activate ? activate : () => { };
+        this.publicUser = publicUser ? publicUser : new PublicUser;
     }
 }
