@@ -1,15 +1,16 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from 'react-router-dom';
-import DrawMandala from './components/Mandala/DrawMandala';
 import Navbar from './components/Navbar';
 import Login from './components/Logins/Login';
 import { useEffect, useState } from 'react';
 import { User } from './types/User';
-import AdminTools from './components/Admin/AdminTools';
+import UsersList from './components/Admin/UsersList';
 import MandalaService from './services/MandalaService';
 import Mandalas from './components/Mandala/Mandalas';
 import { PublicUser } from './types/PublicUser';
+import { useNavigate } from 'react-router';
+
 
 function App() {
 
@@ -18,6 +19,9 @@ function App() {
   // const [message, setMessage] = useState('');
   const [headerMessage, setHeaderMessage] = useState('שלום אורח');
   const [isAdmin, setIsAdmin] = useState(false);
+
+  let navigate = useNavigate();
+
 
   useEffect(() => {
     setToken(localStorage.getItem("token") || '');
@@ -57,7 +61,6 @@ function App() {
     setIsAdmin(loginMessage === 'Hello Admin' ?
       true : false);
   }
-
   const logout = () => {
     if (token) {
       MandalaService.logout(token);
@@ -66,12 +69,10 @@ function App() {
       setHeaderMessage('שלום אורח');
       // retrieveUser();
       localStorage.setItem("token", '');
+      setIsAdmin(false);
+      navigate('/login');
     }
   }
-
-  // const handlePublicUser = (publicUser: PublicUser) => {
-
-  // }
 
   return (
     <div className="App">
@@ -83,36 +84,42 @@ function App() {
         />
         <div className="container mt-3">
           <Routes>
-            {/* <Route path="/mandala" element={
+            {
+              token ?
+                ["/", "/mandala", "/login"].map((path, index) => {
+                  return (
+                    <Route path={path} element={
+                      <Mandalas
+                        publicUser={user as PublicUser}
+                        token={token}
+                      />}
+                      key={index}
+                    />
+                  );
+                })
+                :
+                ["/", "/login"].map((path, index) => {
+                  return (
+                    <Route path={path} element={
+                      <Login
+                        getToken={handleToken}
+                        getLoginMessage={handleLoginMessage}
+                      />}
+                      key={index}
+                    />
+                  );
+                })
+            }
+            <Route path="/admin" element={
+              <UsersList
+                token={token}
+                isAdmin={isAdmin}
+              />} />
+            <Route path="/mandala" element={
               <Mandalas
                 publicUser={user as PublicUser}
-              />} /> */}
-            {["/", "/mandala", token && "/login"].map((path, index) => {
-              return (
-                <Route path={path} element={
-                  <Mandalas
-                    publicUser={user as PublicUser}
-                    // handlePublicUser={handlePublicUser}
-                    token={token}
-                  />}
-                  key={index}
-                />
-              );
-            })}
-            {token}
-            <Route
-              path="/login" element={
-                <Login
-                  getToken={handleToken}
-                  getLoginMessage={handleLoginMessage}
-                />
-              } />
-            {isAdmin &&
-              <Route path="/admin" element={
-                <AdminTools
-                  adminToken={token}
-                  isAdmin={isAdmin}
-                />} />}
+                token={token}
+              />} />
           </Routes>
         </div>
         {/* <p>{message}</p> */}

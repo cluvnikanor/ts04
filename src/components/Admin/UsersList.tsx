@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import MandalaService from "../../services/MandalaService";
 import { User } from "../../types/User";
 
-interface AdminToolsProps {
-    adminToken: string;
+interface UsersListToolsProps {
+    token: string;
     // users: User[];
     isAdmin: boolean;
     // getUsersList: (usersList: User[]) => void;
 }
 
-function AdminTools({ adminToken, isAdmin, }: AdminToolsProps) {
+function UsersList({ token, isAdmin, }: UsersListToolsProps) {
 
     const [selectedUser, setSelectedUser] = useState(NaN);
     const [confirm, setConfirm] = useState(false);
@@ -34,19 +34,17 @@ function AdminTools({ adminToken, isAdmin, }: AdminToolsProps) {
     }
 
     const handleDeleting = () => {
-        
         setConfirm(prev => !prev);
     }
 
     const deleteUser = () => {
         setConfirm(prev => !prev);
-        MandalaService.removeUser(users[selectedUser].id, adminToken);
+        MandalaService.removeUser(users[selectedUser].id, token);
     }
 
     return (
         <>
-            <h1>כלי ניהול</h1>
-            <h2>משתמשים</h2>
+            <h1>משתמשים</h1>
             {users &&
                 <>
                     <table className="table table-dark">
@@ -78,12 +76,13 @@ function AdminTools({ adminToken, isAdmin, }: AdminToolsProps) {
                             ))}
                         </tbody>
                     </table>
-                    <button
-                        type="button"
-                        className="btn btn-warning"
-                        onClick={handleDeleting}
-                    >Delete
-                    </button>
+                    {isAdmin &&
+                        <button
+                            type="button"
+                            className="btn btn-warning"
+                            onClick={handleDeleting}
+                        >Delete
+                        </button>}
                     {confirm &&
                         <div className="alert alert-danger" role="alert">
                             Are you sure?
@@ -106,4 +105,4 @@ function AdminTools({ adminToken, isAdmin, }: AdminToolsProps) {
     )
 }
 
-export default AdminTools;
+export default UsersList;

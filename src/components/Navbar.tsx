@@ -22,7 +22,7 @@ function Navbar({ headerMessage, isLogin, logout }: NavbarProps) {
     {
       id: 5,
       path: '/Admin',
-      text: 'כלי ניהול',
+      text: 'משתמשים',
     },
   ]
 
