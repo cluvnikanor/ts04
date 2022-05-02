@@ -60,7 +60,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
     }
 
     const handleActivate = (mandalaIndex: number) => {
-        console.log(publicUser) 
+        console.log(publicUser)
         console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity, 'mandalaIndex=', mandalaIndex)
         if (mandala?.id
             && (publicUser.mandalaIndex > 15 || publicUser.mandalaIndex < 0)
@@ -76,38 +76,39 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
 
     return (
         <>
-            {publicUser.id &&
-                <>
-                    {mandala ?
-                        <>
-                            <DrawMandala
-                                mandala={mandala}
-                                publicUser={publicUser}
-                                handleActivate={handleActivate}
-                            />
-                        </>
-                        :
-                        <>
-                            <h2>Available Mandalas</h2>
-                            <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-                                {/* {mandalas?.map(m => ( */}
-                                {mandalas?.filter(m => m.userQuantity < 15)
-                                    .map(m => (
-                                        <button
-                                            key={m.id}
-                                            type="button"
-                                            className="btn btn-primary"
-                                            onClick={() => handleChooseMandala(m.id as string)}
-                                        >
-                                            {m.userQuantity == 0 ?
-                                                'empty mandala'
-                                                :
-                                                m.publicUsers[0].name}
-                                        </button>
-                                    ))}
-                            </div>
-                        </>}
-                </>}
+            {/* {publicUser.id && */}
+            <>
+                {mandala ?
+                    <>
+                        <DrawMandala
+                            mandala={mandala}
+                            publicUser={publicUser}
+                            handleActivate={handleActivate}
+                        />
+                    </>
+                    :
+                    <>
+                        <h2>Available Mandalas</h2>
+                        <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
+                            {/* {mandalas?.map(m => ( */}
+                            {mandalas?.filter(m => m.userQuantity < 15)
+                                .map(m => (
+                                    <button
+                                        key={m.id}
+                                        type="button"
+                                        className="btn btn-primary"
+                                        onClick={() => handleChooseMandala(m.id as string)}
+                                    >
+                                        {m.userQuantity == 0 ?
+                                            'empty mandala'
+                                            :
+                                            m.publicUsers[0].name}
+                                    </button>
+                                ))}
+                        </div>
+                    </>}
+            </>
+            // }
         </>
     )
 }
