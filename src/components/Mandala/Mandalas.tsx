@@ -79,13 +79,13 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
             {/* {publicUser.id && */}
             <>
                 {mandala ?
-                    <>
+                    <div className='scaled'>
                         <DrawMandala
                             mandala={mandala}
                             publicUser={publicUser}
                             handleActivate={handleActivate}
                         />
-                    </>
+                    </div>
                     :
                     <>
                         <h2>מנדלות פנויות</h2>

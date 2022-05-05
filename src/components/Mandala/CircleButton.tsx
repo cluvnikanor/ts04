@@ -8,7 +8,7 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
     const [showRegistration, setShowRegistration] = useState(false);
 
     let backgroundColor = isActive ? color : 'grey';
-    const buttonTitle = publicUser.id? `${publicUser.name}\n${publicUser.site}\n${title}`:title;
+    const buttonTitle = publicUser.id ? `${publicUser.name}\n${publicUser.site}\n${title}` : title;
 
     const handleCancel = () => {
         setShowRegistration(false);
@@ -19,31 +19,32 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
             && setShowRegistration(true);
     }
 
+    const styleInitProps = {
+        width: 128,
+        height: 128,
+        borderRadius: 64,
+    }
+    const zoom = 0.5;
+    const styleProps = {
+        width: styleInitProps.width * zoom,
+        height: styleInitProps.height * zoom,
+        borderRadius: styleInitProps.borderRadius * zoom,
+    }
+
     return (
         <>
             <button
                 style={{
                     backgroundColor: backgroundColor,
-                    border: `5px solid ${color}`,
+                    border: `2px solid ${color}`,
                     left: left,
-                    width: 128,
+                    width: styleProps.width,
                     top: top,
-                    height: 128,
-                    borderRadius: 64,
+                    height: styleProps.height,
+                    borderRadius: styleProps.borderRadius,
                     padding: 0,
                     position: 'absolute',
                 }}
-                // style={{
-                //     backgroundColor: backgroundColor,
-                //     border: `4px solid ${color}`,
-                //     left: left,
-                //     width: 96,
-                //     top: top,
-                //     height: 96,
-                //     borderRadius: 48,
-                //     padding: 0,
-                //     position: 'absolute',
-                // }}
                 type="button"
                 className={className}
                 data-toggle="tooltip" data-placement="right"

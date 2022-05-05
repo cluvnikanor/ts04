@@ -3,8 +3,8 @@ import { PublicUser } from "../../types/PublicUser";
 export class CircleButtonProps {
     className: string = '';
     color: string = 'white';
-    left: string = '0';
-    top: string = '0';
+    left: number = 0;
+    top:  number = 0;
     title: string = '';
     isActive: boolean = false;
     activate: () => void;
@@ -13,8 +13,8 @@ export class CircleButtonProps {
     constructor(
         className: string,
         color: string,
-        left: string,
-        top: string,
+        left: number,
+        top: number,
         title: string,
         isActive?: boolean,
         activate?: () => boolean,
