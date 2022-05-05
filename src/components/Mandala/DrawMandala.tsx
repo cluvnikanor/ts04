@@ -18,7 +18,7 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
         className: 'line',
         delay: 0,
         borderColor: "yellow",
-        borderWidth: 5,
+        borderWidth: 4,
         position: "relative",/*DW*/
     };
 
@@ -36,12 +36,14 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
         )
     }
 
+    const zoom = 0.4;
+
     const circlesInitLeft = [425, 605, 695, 695, 695, 845, 695, 845, 240, 150, 150, 150, 0, 150, 0,];
     const circlesInitTop = [320, 320, 175, 465, 0, 80, 620, 560, 320, 175, 465, 0, 80, 620, 560,];
-    const circlesLeft = circlesInitLeft.map(value=>(value*0.5));
-    const circlesTop = circlesInitTop.map(value=>(value*0.5));
+    const circlesLeft = circlesInitLeft.map(value => (value * zoom));
+    const circlesTop = circlesInitTop.map(value => (value * zoom));
 
-    const circleRadius = 32;
+    const circleRadius = 64 * zoom;
 
     const initLeft = 10;
     const initTop = 60;

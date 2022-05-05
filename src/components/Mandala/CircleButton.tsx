@@ -24,7 +24,7 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
         height: 128,
         borderRadius: 64,
     }
-    const zoom = 0.5;
+    const zoom = 0.4;
     const styleProps = {
         width: styleInitProps.width * zoom,
         height: styleInitProps.height * zoom,
