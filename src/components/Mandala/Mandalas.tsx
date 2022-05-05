@@ -24,18 +24,18 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
     // }, [mandalas]);
 
     useEffect(() => {
-        console.log(publicUser)
+        // console.log(publicUser)
         publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
         mandala || retrieveMandalas();
     }, [publicUser]);
 
-    useEffect(() => {
-        console.log(mandala)
-    }, [mandala]);
+    // useEffect(() => {
+    //     console.log(mandala)
+    // }, [mandala]);
 
-    useEffect(() => {
-        console.log(mandalas)
-    }, [mandalas]);
+    // useEffect(() => {
+    //     console.log(mandalas)
+    // }, [mandalas]);
 
     const retrieveMandalas = () => {
         MandalaService.getMandalas()
@@ -60,11 +60,11 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
     }
 
     const handleActivate = (mandalaIndex: number) => {
-        console.log(publicUser)
-        console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity, 'mandalaIndex=', mandalaIndex)
+        // console.log(publicUser)
+        // console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity, 'mandalaIndex=', mandalaIndex)
         if (mandala?.id
-            && (publicUser.mandalaIndex > 15 || publicUser.mandalaIndex < 0)
-            && (mandala.userQuantity > 0 || mandalaIndex == 0)
+            && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
+            && (mandala.userQuantity > 0 || mandalaIndex === 0)
             && mandala.userQuantity < 15) {
             MandalaService.takeRoll(token, mandalaIndex, mandala.id);
             // publicUser.mandalaIndex = mandalaIndex;
@@ -99,7 +99,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
                                         className="btn btn-primary"
                                         onClick={() => handleChooseMandala(m.id as string)}
                                     >
-                                        {m.userQuantity == 0 ?
+                                        {m.userQuantity === 0 ?
                                             'מנדלה חדשה'
                                             :
                                             m.publicUsers[0].name}

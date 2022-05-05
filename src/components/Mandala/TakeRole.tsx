@@ -16,13 +16,18 @@ function TakeRole({ title, activate, handleCancel, publicUser, }: TakeRoleProps)
 
     return (
         <>
-            <p>
+            <p
+                style={{
+                    position: 'fixed',
+                    top: '60px',
+                }}>
                 `
                 להרשם לתפקיד
+                &nbsp;
                 {title}
                 ?`
 
-            </p>
+            </p >
             <button type="button"
                 className="btn btn-primary"
                 onClick={handleRegister}

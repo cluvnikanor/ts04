@@ -14,6 +14,8 @@ interface drawMandalaProps {
 
 function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) {
 
+    const register = () => { }
+
     const style = {
         className: 'line',
         delay: 0,
@@ -181,6 +183,8 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
                     // activate={() => handleActivate(i.className)}
                     activate={() => handleActivate(i.className as unknown as number)}
                     publicUser={mandala.publicUsers[i.className as unknown as number]}
+                    // canRegister={publicUser.id && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0) ? true : false}
+                    register={register}
                 />
             ))}
         </>
