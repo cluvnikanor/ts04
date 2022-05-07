@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-lineto';
 import { Mandala } from '../../types/Mandala';
 import { PublicUser } from '../../types/PublicUser';
 import CircleButton from './CircleButton';
 import { CircleButtonProps } from './CircleButtonProps'
 import { LineProps } from './LineProps';
+// import TakeRole from './TakeRole';
 
 interface drawMandalaProps {
     mandala: Mandala;
     publicUser: PublicUser;
-    handleActivate: (index: number) => void;
+    register: (className: string) => void;
 }
 
-function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) {
-
-    const register = () => { }
+function DrawMandala({ mandala, publicUser, register }: drawMandalaProps) {
+    const [registering, setRegistering] = useState(NaN);
 
     const style = {
         className: 'line',
@@ -68,60 +68,6 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
         new CircleButtonProps('14', 'green', initLeft + circlesLeft[14], initTop + circlesTop[14], 'תומכת טכנית',),
     ]
 
-    // const circles = [
-    //     new CircleButtonProps('0', 'yellow', initLeft + 425, initTop + 320, 'מדריכה',),
-    //     new CircleButtonProps('1', 'pink', initLeft + 605, initTop + 320, 'תומכת',),
-    //     new CircleButtonProps('2', 'skyblue', initLeft + 695, initTop + 175, 'תומכת רגשית',),
-    //     new CircleButtonProps('3', 'skyblue', initLeft + 695, initTop + 465, 'תומכת רגשית',),
-    //     new CircleButtonProps('4', 'green', initLeft + 695, initTop + 0, 'תומכת טכנית',),
-    //     new CircleButtonProps('5', 'green', initLeft + 845, initTop + 80, 'תומכת טכנית',),
-    //     new CircleButtonProps('6', 'green', initLeft + 695, initTop + 620, 'תומכת טכנית',),
-    //     new CircleButtonProps('7', 'green', initLeft + 845, initTop + 560, 'תומכת טכנית',),
-    //     new CircleButtonProps('8', 'pink', initLeft + 240, initTop + 320, 'תומכת',),
-    //     new CircleButtonProps('9', 'skyblue', initLeft + 150, initTop + 175, 'תומכת רגשית',),
-    //     new CircleButtonProps('10', 'skyblue', initLeft + 150, initTop + 465, 'תומכת רגשית',),
-    //     new CircleButtonProps('11', 'green', initLeft + 150, initTop + 0, 'תומכת טכנית',),
-    //     new CircleButtonProps('12', 'green', initLeft + 0, initTop + 80, 'תומכת טכנית',),
-    //     new CircleButtonProps('13', 'green', initLeft + 150, initTop + 620, 'תומכת טכנית',),
-    //     new CircleButtonProps('14', 'green', initLeft + 0, initTop + 560, 'תומכת טכנית',),
-    // ]
-
-    // const circles = [
-    //     new CircleButtonProps('0', 'yellow', 440, 380, 'מדריכה',),
-    //     new CircleButtonProps('1', 'pink', 620, 380, 'תומכת',),
-    //     new CircleButtonProps('2', 'skyblue', 710, 235, 'תומכת רגשית',),
-    //     new CircleButtonProps('3', 'skyblue', 710, 525, 'תומכת רגשית',),
-    //     new CircleButtonProps('4', 'green', 710, 60, 'תומכת טכנית',),
-    //     new CircleButtonProps('5', 'green', 860, 140, 'תומכת טכנית',),
-    //     new CircleButtonProps('6', 'green', 710, 700, 'תומכת טכנית',),
-    //     new CircleButtonProps('7', 'green', 860, 620, 'תומכת טכנית',),
-    //     new CircleButtonProps('8', 'pink', 255, 380, 'תומכת',),
-    //     new CircleButtonProps('9', 'skyblue', 165, 235, 'תומכת רגשית',),
-    //     new CircleButtonProps('10', 'skyblue', 165, 525, 'תומכת רגשית',),
-    //     new CircleButtonProps('11', 'green', 165, 60, 'תומכת טכנית',),
-    //     new CircleButtonProps('12', 'green', 15, 140, 'תומכת טכנית',),
-    //     new CircleButtonProps('13', 'green', 165, 700, 'תומכת טכנית',),
-    //     new CircleButtonProps('14', 'green', 15, 620, 'תומכת טכנית',),
-    // ]
-
-    // const circles = [
-    //     new CircleButtonProps('0', 'yellow', '440px', '380px', 'מדריכה',),
-    //     new CircleButtonProps('1', 'pink', '620px', '380px', 'תומכת',),
-    //     new CircleButtonProps('2', 'skyblue', '710px', '235px', 'תומכת רגשית',),
-    //     new CircleButtonProps('3', 'skyblue', '710px', '525px', 'תומכת רגשית',),
-    //     new CircleButtonProps('4', 'green', '710px', '60px', 'תומכת טכנית',),
-    //     new CircleButtonProps('5', 'green', '860px', '140px', 'תומכת טכנית',),
-    //     new CircleButtonProps('6', 'green', '710px', '700px', 'תומכת טכנית',),
-    //     new CircleButtonProps('7', 'green', '860px', '620px', 'תומכת טכנית',),
-    //     new CircleButtonProps('8', 'pink', '255px', '380px', 'תומכת',),
-    //     new CircleButtonProps('9', 'skyblue', '165px', '235px', 'תומכת רגשית',),
-    //     new CircleButtonProps('10', 'skyblue', '165px', '525px', 'תומכת רגשית',),
-    //     new CircleButtonProps('11', 'green', '165px', '60px', 'תומכת טכנית',),
-    //     new CircleButtonProps('12', 'green', '15px', '140px', 'תומכת טכנית',),
-    //     new CircleButtonProps('13', 'green', '165px', '700px', 'תומכת טכנית',),
-    //     new CircleButtonProps('14', 'green', '15px', '620px', 'תומכת טכנית',),
-    // ]
-
     const lines = [
         drawLine(circles[0], circles[1], circleRadius),
         drawLine(circles[1], circles[2], circleRadius),
@@ -138,25 +84,23 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
         drawLine(circles[10], circles[13], circleRadius),
         drawLine(circles[10], circles[14], circleRadius),
     ]
-    // const lines = [
-    //     drawLine(circles[0], circles[1], 48),
-    //     drawLine(circles[1], circles[2], 48),
-    //     drawLine(circles[1], circles[3], 48),
-    //     drawLine(circles[2], circles[4], 48),
-    //     drawLine(circles[2], circles[5], 48),
-    //     drawLine(circles[3], circles[6], 48),
-    //     drawLine(circles[3], circles[7], 48),
-    //     drawLine(circles[0], circles[8], 48),
-    //     drawLine(circles[8], circles[9], 48),
-    //     drawLine(circles[8], circles[10], 48),
-    //     drawLine(circles[9], circles[11], 48),
-    //     drawLine(circles[9], circles[12], 48),
-    //     drawLine(circles[10], circles[13], 48),
-    //     drawLine(circles[10], circles[14], 48),
-    // ]
+
+    // const register = (className: string) => {
+    //     setRegistering(parseInt(className));
+    // }
+
+    // const handleCancel = () => {
+    //     setRegistering(NaN);
+    // }
 
     return (
         <>
+            {/* {registering &&
+                <TakeRole
+                    title={circles[registering].title}
+                    handleCancel={handleCancel}
+
+                />} */}
             {lines.map(i => (
                 <Line
                     key={`${i.x0}${i.y0}${i.x1}${i.y1}`}
@@ -181,7 +125,7 @@ function DrawMandala({ mandala, publicUser, handleActivate }: drawMandalaProps) 
                             true : false
                         : false}
                     // activate={() => handleActivate(i.className)}
-                    activate={() => handleActivate(i.className as unknown as number)}
+                    // activate={() => register(i.className as unknown as number)}
                     publicUser={mandala.publicUsers[i.className as unknown as number]}
                     // canRegister={publicUser.id && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0) ? true : false}
                     register={register}

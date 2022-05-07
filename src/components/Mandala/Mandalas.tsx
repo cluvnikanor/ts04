@@ -3,6 +3,7 @@ import MandalaService from "../../services/MandalaService";
 import { Mandala } from "../../types/Mandala";
 import { PublicUser } from "../../types/PublicUser";
 import DrawMandala from "./DrawMandala";
+import TakeRole from "./TakeRole";
 
 interface MandalasProps {
     publicUser: PublicUser;
@@ -13,6 +14,7 @@ interface MandalasProps {
 function Mandalas({ publicUser, token, }: MandalasProps) {
     const [mandala, setMandala] = useState<Mandala>();
     const [mandalas, setMandalas] = useState<Array<Mandala>>([]);
+    const [takingRoll, setTakingRoll] = useState(NaN);
 
     // useEffect(() => {
     //     publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
@@ -74,18 +76,46 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
         }
     }
 
+    const register = (className: string) => {
+        const mandalaIndex = parseInt(className);
+        console.log(className, mandalaIndex)
+        console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity,)
+        if (mandala?.id
+            && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
+            && (mandala.userQuantity > 0 || mandalaIndex === 0)
+            && mandala.userQuantity < 15) {
+            setTakingRoll(mandalaIndex);
+        }
+        console.log(takingRoll)
+    }
+
+    const handleRegister = () => {
+        mandala?.id &&
+            MandalaService.takeRoll(token, takingRoll, mandala.id);
+        setTakingRoll(NaN);
+    }
+
+    const handleCancel = () => {
+        setTakingRoll(NaN);
+    }
+
     return (
         <>
-            {/* {publicUser.id && */}
             <>
+                {takingRoll &&
+                    <TakeRole
+                        title=""
+                        handleRegister={handleRegister}
+                        handleCancel={handleCancel}
+                    />}
                 {mandala ?
-                    <div className='scaled'>
+                    <>
                         <DrawMandala
                             mandala={mandala}
                             publicUser={publicUser}
-                            handleActivate={handleActivate}
+                            register={register}
                         />
-                    </div>
+                    </>
                     :
                     <>
                         <h2>מנדלות פנויות</h2>
@@ -108,7 +138,6 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
                         </div>
                     </>}
             </>
-            {/* } */}
         </>
     )
 }

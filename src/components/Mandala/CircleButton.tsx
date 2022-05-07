@@ -4,33 +4,28 @@ import { CircleButtonProps } from './CircleButtonProps';
 import TakeRole from './TakeRole';
 
 
-function CircleButton({ className, color, left, top, title, isActive, activate, publicUser, register, }: CircleButtonProps) {
+function CircleButton({ className, color, left, top, title, isActive, publicUser, register, }: CircleButtonProps) {
     const [showRegistration, setShowRegistration] = useState(false);
 
     let backgroundColor = isActive ? color : 'grey';
     const buttonTitle = publicUser.id ? `${publicUser.name}\n${title}` : title;
 
-    const handleCancel = () => {
-        setShowRegistration(false);
-    }
+    // const handleCancel = () => {
+    //     setShowRegistration(false);
+    // }
 
+    // const handleClick = () => {
+    //     // canRegister &&
+    //     (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
+    //         && setShowRegistration(true);
+    // }
     const handleClick = () => {
-        // canRegister &&
-            (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
-            && setShowRegistration(true);
+        register(className);
     }
 
-    const styleInitProps = {
-        width: 128,
-        height: 128,
-        borderRadius: 64,
-    }
+    const buttonInitSize = 128;
     const zoom = 0.4;
-    const styleProps = {
-        width: styleInitProps.width * zoom,
-        height: styleInitProps.height * zoom,
-        borderRadius: styleInitProps.borderRadius * zoom,
-    }
+    const buttonSize = buttonInitSize * zoom;
 
     return (
         <>
@@ -39,12 +34,13 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
                     backgroundColor: backgroundColor,
                     border: `2px solid ${color}`,
                     left: left,
-                    width: styleProps.width,
+                    width: buttonSize,
                     top: top,
-                    height: styleProps.height,
-                    borderRadius: styleProps.borderRadius,
+                    height: buttonSize,
+                    borderRadius: buttonSize / 2,
                     padding: 0,
                     position: 'absolute',
+                    fontSize: '14px',
                 }}
                 type="button"
                 className={className}
@@ -54,12 +50,13 @@ function CircleButton({ className, color, left, top, title, isActive, activate, 
             >
                 {isActive ? publicUser.name : <FaPlusCircle color={color} size="40px" />}
             </button>
-            {showRegistration &&
+            {/* {showRegistration &&
                 <TakeRole
                     title={title}
-                    activate={activate}
+                    // activate={activate}
                     handleCancel={handleCancel}
-                    publicUser={publicUser} />}
+                    // publicUser={publicUser}
+                     />} */}
         </>
     )
 }

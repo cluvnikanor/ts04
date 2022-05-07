@@ -7,10 +7,10 @@ export class CircleButtonProps {
     top: number = 0;
     title: string = '';
     isActive: boolean = false;
-    activate: () => void;
+    // activate: () => void;
     publicUser: PublicUser = new PublicUser;
     // canRegister: boolean = false;
-    register: () => void;
+    register: (className: string) => void;
 
     constructor(
         className: string,
@@ -19,10 +19,10 @@ export class CircleButtonProps {
         top: number,
         title: string,
         isActive?: boolean,
-        activate?: () => boolean,
+        // activate?: () => boolean,
         publicUser?: PublicUser,
         // canRegister?: boolean,
-        register?: () => void,
+        register?: (className: string) => void,
     ) {
         this.className = className;
         this.color = color;
@@ -30,7 +30,7 @@ export class CircleButtonProps {
         this.top = top;
         this.title = title;
         this.isActive = isActive ? isActive : false;
-        this.activate = activate ? activate : () => { };
+        // this.activate = activate ? activate : () => { };
         this.publicUser = publicUser ? publicUser : new PublicUser;
         // this.canRegister = canRegister ? canRegister : false;
         this.register = register ? register : () => {};

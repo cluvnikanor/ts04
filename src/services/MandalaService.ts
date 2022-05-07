@@ -45,6 +45,10 @@ const addIdMandala = (mandalaId:string) => {
     return http.get<any>(`/addMandala/${mandalaId}`);
 }
 
+const endMandala = (mandalaId:string)=>{
+    return http.delete<any>(`/deleteMandala/${mandalaId}`);
+}
+
 const MandalaService = {
     login,
     register,
@@ -57,6 +61,7 @@ const MandalaService = {
     getMandalas,
     addMandala,
     addIdMandala,
+    endMandala,
 }
 
 export default MandalaService;
