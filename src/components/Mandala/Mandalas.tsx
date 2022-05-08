@@ -7,7 +7,6 @@ import TakeRole from "./TakeRole";
 
 interface MandalasProps {
     publicUser: PublicUser;
-    // handlePublicUser: (publicUser: PublicUser) => void;
     token: string;
 }
 
@@ -30,6 +29,10 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
         publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
         mandala || retrieveMandalas();
     }, [publicUser]);
+
+    // useEffect(() => {
+    //     console.log('takingRoll=', takingRoll)
+    // }, [takingRoll]);
 
     // useEffect(() => {
     //     console.log(mandala)
@@ -78,15 +81,16 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
 
     const register = (className: string) => {
         const mandalaIndex = parseInt(className);
-        console.log(className, mandalaIndex)
+        console.log('mandalaIndex=', mandalaIndex)
+        console.log('mandala?.id=', mandala?.id)
         console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity,)
         if (mandala?.id
             && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
-            && (mandala.userQuantity > 0 || mandalaIndex === 0)
+            && (mandala.userQuantity > 0 ||
+                (mandalaIndex === 0 && mandala.userQuantity === 0))
             && mandala.userQuantity < 15) {
             setTakingRoll(mandalaIndex);
         }
-        console.log(takingRoll)
     }
 
     const handleRegister = () => {
@@ -102,7 +106,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
     return (
         <>
             <>
-                {takingRoll &&
+                {(takingRoll || takingRoll === 0) &&
                     <TakeRole
                         title=""
                         handleRegister={handleRegister}
