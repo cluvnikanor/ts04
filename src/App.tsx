@@ -28,7 +28,6 @@ function App() {
   // }, []);
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    console.log('storedToken=', storedToken)
     storedToken && storedToken !== 'undefined' &&
       setToken(storedToken) &&
       retrieveUser(storedToken);
@@ -45,7 +44,7 @@ function App() {
   }, [token]);
 
   const retrieveUser = (token: string) => {
-    console.log(token)
+    // console.log(token)
     token && token !== 'undefined' &&
       MandalaService.getUser(token)
         .then((response: any) => {

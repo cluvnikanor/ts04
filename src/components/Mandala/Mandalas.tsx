@@ -64,20 +64,20 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
         retrieveMandala(mandalaId);
     }
 
-    const handleActivate = (mandalaIndex: number) => {
-        // console.log(publicUser)
-        // console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity, 'mandalaIndex=', mandalaIndex)
-        if (mandala?.id
-            && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
-            && (mandala.userQuantity > 0 || mandalaIndex === 0)
-            && mandala.userQuantity < 15) {
-            MandalaService.takeRoll(token, mandalaIndex, mandala.id);
-            // publicUser.mandalaIndex = mandalaIndex;
-            // publicUser.mandalaId = mandala.id;
-            retrieveMandala(mandala.id);
-            // handlePublicUser(new PublicUser(publicUser.id, publicUser.name, publicUser.site, mandala.id, mandalaIndex));
-        }
-    }
+    // const handleActivate = (mandalaIndex: number) => {
+    //     // console.log(publicUser)
+    //     // console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity, 'mandalaIndex=', mandalaIndex)
+    //     if (mandala?.id
+    //         && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
+    //         && (mandala.userQuantity > 0 || mandalaIndex === 0)
+    //         && mandala.userQuantity < 15) {
+    //         MandalaService.takeRoll(token, mandalaIndex, mandala.id);
+    //         // publicUser.mandalaIndex = mandalaIndex;
+    //         // publicUser.mandalaId = mandala.id;
+    //         retrieveMandala(mandala.id);
+    //         // handlePublicUser(new PublicUser(publicUser.id, publicUser.name, publicUser.site, mandala.id, mandalaIndex));
+    //     }
+    // }
 
     const register = (className: string) => {
         const mandalaIndex = parseInt(className);
@@ -85,6 +85,7 @@ function Mandalas({ publicUser, token, }: MandalasProps) {
         console.log('mandala?.id=', mandala?.id)
         console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity,)
         if (mandala?.id
+            && publicUser.id
             && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
             && (mandala.userQuantity > 0 ||
                 (mandalaIndex === 0 && mandala.userQuantity === 0))

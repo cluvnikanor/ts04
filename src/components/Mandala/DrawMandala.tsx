@@ -14,7 +14,7 @@ interface drawMandalaProps {
 }
 
 function DrawMandala({ mandala, publicUser, register }: drawMandalaProps) {
-    const [registering, setRegistering] = useState(NaN);
+    // const [registering, setRegistering] = useState(NaN);
 
     const style = {
         className: 'line',
@@ -48,7 +48,7 @@ function DrawMandala({ mandala, publicUser, register }: drawMandalaProps) {
     const circleRadius = 64 * zoom;
 
     const initLeft = 10;
-    const initTop = 60;
+    const initTop = 100;
 
     const circles = [
         new CircleButtonProps('0', 'yellow', initLeft + circlesLeft[0], initTop + circlesTop[0], 'מדריכה',),
