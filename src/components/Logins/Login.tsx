@@ -48,9 +48,9 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
         registering ? registerUser() : loginUser();
     }
 
-    const handleLoginMessage = (loginMessage: string) => {
-        console.log('loginMessage=', loginMessage)
-        switch (loginMessage) {
+    const handleLoginMessage = (responseDataMessage: string) => {
+        console.log('responseDataMessage=', responseDataMessage)
+        switch (responseDataMessage) {
             case "Username or password incorrect":
                 setLoginMessage('שם משתמש או סיסמה לא נכונים');
                 break;
@@ -70,6 +70,7 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                     .then((response: any) => {
                         getToken(response.data.token);
                         handleLoginMessage(response.data.message);
+                        console.log(response.data.message)
                     })
         }
     }
@@ -80,7 +81,7 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                 MandalaService.register(input)
                     .then((response: any) => {
                         getToken(response.data.token);
-                        handleLoginMessage(response.data.message);
+                        handleLoginMessage(response);
                     })
         }
     }
@@ -145,9 +146,9 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                         onChange={handleInputChange}
                     />
                 </div>
-                {/* {loginMessage && */}
-                <p>{loginMessage}</p>
-                {/* } */}
+                {loginMessage &&
+                    <p className="warningMessage">{loginMessage}</p>
+                }
                 <button
                     type="submit"
                     className="btn btn-primary"
