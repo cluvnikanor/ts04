@@ -20,12 +20,19 @@ function App() {
   const [headerMessage, setHeaderMessage] = useState('שלום אורח');
   const [isAdmin, setIsAdmin] = useState(false);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-
+  // useEffect(() => {
+  //   setToken(localStorage.getItem("token") || '');
+  //   retrieveUser(localStorage.getItem("token") || '');
+  // }, []);
   useEffect(() => {
-    setToken(localStorage.getItem("token") || '');
-    retrieveUser(localStorage.getItem("token") || '');
+    const storedToken = localStorage.getItem("token");
+    console.log('storedToken=', storedToken)
+    storedToken && storedToken !== 'undefined' &&
+      setToken(storedToken) &&
+      retrieveUser(storedToken);
+    console.log()
   }, []);
 
   useEffect(() => {
@@ -34,11 +41,12 @@ function App() {
 
   useEffect(() => {
     console.log('in useEffect[token]: token=', token);
-    retrieveUser(token);
+    token && retrieveUser(token);
   }, [token]);
 
   const retrieveUser = (token: string) => {
-    token &&
+    console.log(token)
+    token && token !== 'undefined' &&
       MandalaService.getUser(token)
         .then((response: any) => {
           setUser(response.data);
@@ -56,10 +64,8 @@ function App() {
     setToken(token);
   }
 
-  const handleLoginMessage = (loginMessage: string) => {
-    // setMessage(loginMessage);
-    setIsAdmin(loginMessage === 'Hello Admin' ?
-      true : false);
+  const handleIsAdmin = (isAdminLogged: boolean) => {
+    setIsAdmin(isAdminLogged);
   }
   const logout = () => {
     if (token) {
@@ -103,7 +109,7 @@ function App() {
                     <Route path={path} element={
                       <Login
                         getToken={handleToken}
-                        getLoginMessage={handleLoginMessage}
+                        handleIsAdmin={handleIsAdmin}
                       />}
                       key={index}
                     />

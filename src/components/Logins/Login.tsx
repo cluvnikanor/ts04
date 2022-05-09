@@ -1,17 +1,22 @@
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import MandalaService from "../../services/MandalaService";
 // import { LoginProps } from "./LoginProps";
 import { User } from "../../types/User";
 
 interface LoginProps {
     getToken: (token: string) => void;
-    getLoginMessage: (loginMessage: string) => void;
+    handleIsAdmin: (isAdmin: boolean) => void;
 }
 
-function Login({ getToken, getLoginMessage }: LoginProps) {
+function Login({ getToken, handleIsAdmin }: LoginProps) {
 
     const [input, setInput] = useState<User>(new User);
     const [registering, setRegistering] = useState(false);
+    const [loginMessage, setLoginMessage] = useState('');
+
+    useEffect(() => {
+        console.log('loginMessage=', loginMessage)
+    }, [loginMessage]);
 
     const submitButtonText = registering ?
         'הרשמה'
@@ -43,13 +48,28 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
         registering ? registerUser() : loginUser();
     }
 
+    const handleLoginMessage = (loginMessage: string) => {
+        console.log('loginMessage=', loginMessage)
+        switch (loginMessage) {
+            case "Username or password incorrect":
+                setLoginMessage('שם משתמש או סיסמה לא נכונים');
+                break;
+            case "Hello Admin":
+                handleIsAdmin(true);
+                break;
+            case "Can't add user: email is used":
+                setLoginMessage('שם משתמש כבר בשימוש');
+                break;
+        }
+    }
+
     const loginUser = () => {
         {
             input.email && input.password &&
                 MandalaService.login(input.email, input.password)
                     .then((response: any) => {
                         getToken(response.data.token);
-                        getLoginMessage(response.data.message);
+                        handleLoginMessage(response.data.message);
                     })
         }
     }
@@ -57,11 +77,11 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
     const registerUser = () => {
         {
             input.email && input.password && input.name && input.site &&
-            MandalaService.register(input)
-                .then((response: any) => {
-                    getToken(response.data.token);
-                    getLoginMessage(response.data.message);
-                })
+                MandalaService.register(input)
+                    .then((response: any) => {
+                        getToken(response.data.token);
+                        handleLoginMessage(response.data.message);
+                    })
         }
     }
 
@@ -106,7 +126,6 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                         type="email"
                         className="form-control"
                         id="email"
-                        aria-describedby="emailHelp"
                         placeholder="שם משתמש"
                         value={input.email}
                         onChange={handleInputChange}
@@ -126,6 +145,9 @@ function Login({ getToken, getLoginMessage }: LoginProps) {
                         onChange={handleInputChange}
                     />
                 </div>
+                {/* {loginMessage && */}
+                <p>{loginMessage}</p>
+                {/* } */}
                 <button
                     type="submit"
                     className="btn btn-primary"
