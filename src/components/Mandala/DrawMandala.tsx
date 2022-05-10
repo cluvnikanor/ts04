@@ -1,20 +1,15 @@
-import { useEffect, useState } from 'react';
 import { Line } from 'react-lineto';
 import { Mandala } from '../../types/Mandala';
-import { PublicUser } from '../../types/PublicUser';
 import CircleButton from './CircleButton';
 import { CircleButtonProps } from './CircleButtonProps'
 import { LineProps } from './LineProps';
-// import TakeRole from './TakeRole';
 
 interface drawMandalaProps {
     mandala: Mandala;
-    publicUser: PublicUser;
     register: (className: string) => void;
 }
 
-function DrawMandala({ mandala, publicUser, register }: drawMandalaProps) {
-    // const [registering, setRegistering] = useState(NaN);
+function DrawMandala({ mandala, register }: drawMandalaProps) {
 
     const style = {
         className: 'line',

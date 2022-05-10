@@ -16,7 +16,6 @@ function App() {
 
   const [user, setUser] = useState(new User());
   const [token, setToken] = useState('');
-  // const [message, setMessage] = useState('');
   const [headerMessage, setHeaderMessage] = useState('שלום אורח');
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -26,12 +25,17 @@ function App() {
   //   setToken(localStorage.getItem("token") || '');
   //   retrieveUser(localStorage.getItem("token") || '');
   // }, []);
+
+   useEffect(() => {
+        console.log('isAdmin=', isAdmin)
+    }, [isAdmin]);
+
   useEffect(() => {
+    localStorage.getItem("isAdmin") === 'true' && setIsAdmin(true);
     const storedToken = localStorage.getItem("token");
     storedToken && storedToken !== 'undefined' &&
       setToken(storedToken) &&
       retrieveUser(storedToken);
-    console.log()
   }, []);
 
   useEffect(() => {
@@ -40,11 +44,11 @@ function App() {
 
   useEffect(() => {
     console.log('in useEffect[token]: token=', token);
+    token === 'undefined' && setToken('');
     token && retrieveUser(token);
   }, [token]);
 
   const retrieveUser = (token: string) => {
-    // console.log(token)
     token && token !== 'undefined' &&
       MandalaService.getUser(token)
         .then((response: any) => {
@@ -70,11 +74,11 @@ function App() {
     if (token) {
       MandalaService.logout(token);
       setToken('');
-      setUser(new User);
+      setUser(new User());
       setHeaderMessage('שלום אורח');
-      // retrieveUser();
       localStorage.setItem("token", '');
       setIsAdmin(false);
+      localStorage.setItem("isAdmin", `${false}`);
       navigate('/login');
     }
   }
@@ -97,6 +101,7 @@ function App() {
                       <Mandalas
                         publicUser={user as PublicUser}
                         token={token}
+                        isAdmin={isAdmin}
                       />}
                       key={index}
                     />
@@ -124,6 +129,7 @@ function App() {
               <Mandalas
                 publicUser={user as PublicUser}
                 token={token}
+                isAdmin={isAdmin}
               />} />
           </Routes>
         </div>

@@ -1,4 +1,4 @@
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import MandalaService from "../../services/MandalaService";
 // import { LoginProps } from "./LoginProps";
 import { User } from "../../types/User";
@@ -10,13 +10,13 @@ interface LoginProps {
 
 function Login({ getToken, handleIsAdmin }: LoginProps) {
 
-    const [input, setInput] = useState<User>(new User);
+    const [input, setInput] = useState<User>(new User());
     const [registering, setRegistering] = useState(false);
     const [loginMessage, setLoginMessage] = useState('');
 
-    useEffect(() => {
-        console.log('loginMessage=', loginMessage)
-    }, [loginMessage]);
+    // useEffect(() => {
+    //     console.log('loginMessage=', loginMessage)
+    // }, [loginMessage]);
 
     const submitButtonText = registering ?
         'הרשמה'
@@ -44,18 +44,19 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
 
     const handleSubmit = (e: SyntheticEvent) => {
         e.preventDefault();
-        setInput(new User);
+        setInput(new User());
         registering ? registerUser() : loginUser();
     }
 
     const handleLoginMessage = (responseDataMessage: string) => {
-        console.log('responseDataMessage=', responseDataMessage)
+        console.log(responseDataMessage)
         switch (responseDataMessage) {
             case "Username or password incorrect":
                 setLoginMessage('שם משתמש או סיסמה לא נכונים');
                 break;
             case "Hello Admin":
                 handleIsAdmin(true);
+                localStorage.setItem("isAdmin", `${true}`);
                 break;
             case "Can't add user: email is used":
                 setLoginMessage('שם משתמש כבר בשימוש');
@@ -64,26 +65,21 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
     }
 
     const loginUser = () => {
-        {
-            input.email && input.password &&
-                MandalaService.login(input.email, input.password)
-                    .then((response: any) => {
-                        getToken(response.data.token);
-                        handleLoginMessage(response.data.message);
-                        console.log(response.data.message)
-                    })
-        }
+        input.email && input.password &&
+            MandalaService.login(input.email, input.password)
+                .then((response: any) => {
+                    getToken(response.data.token);
+                    handleLoginMessage(response.data.message);
+                })
     }
 
     const registerUser = () => {
-        {
             input.email && input.password && input.name && input.site &&
                 MandalaService.register(input)
                     .then((response: any) => {
                         getToken(response.data.token);
-                        handleLoginMessage(response);
+                        handleLoginMessage(response.data.message);
                     })
-        }
     }
 
     return (
