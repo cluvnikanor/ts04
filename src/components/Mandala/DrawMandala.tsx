@@ -3,6 +3,7 @@ import { Mandala } from '../../types/Mandala';
 import CircleButton from './CircleButton';
 import { CircleButtonProps } from './CircleButtonProps'
 import { LineProps } from './LineProps';
+import { roles } from './Roles';
 
 interface drawMandalaProps {
     mandala: Mandala;
@@ -46,21 +47,21 @@ function DrawMandala({ mandala, register }: drawMandalaProps) {
     const initTop = 100;
 
     const circles = [
-        new CircleButtonProps('0', 'yellow', initLeft + circlesLeft[0], initTop + circlesTop[0], 'מדריכה',),
-        new CircleButtonProps('1', 'pink', initLeft + circlesLeft[1], initTop + circlesTop[1], 'תומכת',),
-        new CircleButtonProps('2', 'skyblue', initLeft + circlesLeft[2], initTop + circlesTop[2], 'תומכת רגשית',),
-        new CircleButtonProps('3', 'skyblue', initLeft + circlesLeft[3], initTop + circlesTop[3], 'תומכת רגשית',),
-        new CircleButtonProps('4', 'green', initLeft + circlesLeft[4], initTop + circlesTop[4], 'תומכת טכנית',),
-        new CircleButtonProps('5', 'green', initLeft + circlesLeft[5], initTop + circlesTop[5], 'תומכת טכנית',),
-        new CircleButtonProps('6', 'green', initLeft + circlesLeft[6], initTop + circlesTop[6], 'תומכת טכנית',),
-        new CircleButtonProps('7', 'green', initLeft + circlesLeft[7], initTop + circlesTop[7], 'תומכת טכנית',),
-        new CircleButtonProps('8', 'pink', initLeft + circlesLeft[8], initTop + circlesTop[8], 'תומכת',),
-        new CircleButtonProps('9', 'skyblue', initLeft + circlesLeft[9], initTop + circlesTop[9], 'תומכת רגשית',),
-        new CircleButtonProps('10', 'skyblue', initLeft + circlesLeft[10], initTop + circlesTop[10], 'תומכת רגשית',),
-        new CircleButtonProps('11', 'green', initLeft + circlesLeft[11], initTop + circlesTop[11], 'תומכת טכנית',),
-        new CircleButtonProps('12', 'green', initLeft + circlesLeft[12], initTop + circlesTop[12], 'תומכת טכנית',),
-        new CircleButtonProps('13', 'green', initLeft + circlesLeft[13], initTop + circlesTop[13], 'תומכת טכנית',),
-        new CircleButtonProps('14', 'green', initLeft + circlesLeft[14], initTop + circlesTop[14], 'תומכת טכנית',),
+        new CircleButtonProps('0', 'yellow', initLeft + circlesLeft[0], initTop + circlesTop[0], roles[0],),
+        new CircleButtonProps('1', 'pink', initLeft + circlesLeft[1], initTop + circlesTop[1], roles[1],),
+        new CircleButtonProps('2', 'skyblue', initLeft + circlesLeft[2], initTop + circlesTop[2], roles[2],),
+        new CircleButtonProps('3', 'skyblue', initLeft + circlesLeft[3], initTop + circlesTop[3], roles[3],),
+        new CircleButtonProps('4', 'green', initLeft + circlesLeft[4], initTop + circlesTop[4], roles[4],),
+        new CircleButtonProps('5', 'green', initLeft + circlesLeft[5], initTop + circlesTop[5], roles[5],),
+        new CircleButtonProps('6', 'green', initLeft + circlesLeft[6], initTop + circlesTop[6], roles[6],),
+        new CircleButtonProps('7', 'green', initLeft + circlesLeft[7], initTop + circlesTop[7], roles[7],),
+        new CircleButtonProps('8', 'pink', initLeft + circlesLeft[8], initTop + circlesTop[8], roles[8],),
+        new CircleButtonProps('9', 'skyblue', initLeft + circlesLeft[9], initTop + circlesTop[9], roles[9],),
+        new CircleButtonProps('10', 'skyblue', initLeft + circlesLeft[10], initTop + circlesTop[10], roles[10],),
+        new CircleButtonProps('11', 'green', initLeft + circlesLeft[11], initTop + circlesTop[11], roles[11],),
+        new CircleButtonProps('12', 'green', initLeft + circlesLeft[12], initTop + circlesTop[12], roles[12],),
+        new CircleButtonProps('13', 'green', initLeft + circlesLeft[13], initTop + circlesTop[13], roles[13],),
+        new CircleButtonProps('14', 'green', initLeft + circlesLeft[14], initTop + circlesTop[14], roles[14],),
     ]
 
     const lines = [

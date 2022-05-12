@@ -11,6 +11,7 @@ function TakeRole({ title, handleRegister, handleCancel }: TakeRoleProps) {
         <>
             <p style={{
                 position: 'fixed',
+                left: '90px',
                 top: '60px',
             }}>
                 להרשם לתפקיד
@@ -21,10 +22,11 @@ function TakeRole({ title, handleRegister, handleCancel }: TakeRoleProps) {
             </p >
             <div style={{
                 position: 'fixed',
+                left: '135px',
                 top: '90px',
             }}>
                 <button type="button"
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     onClick={handleRegister}
                 >
                     להרשם

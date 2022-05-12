@@ -25,8 +25,16 @@ const removeUser = (id: any, adminToken: string) => {
     return http.delete<any>(`/deleteUser?id=${id}&t=${adminToken}`);
 };
 
-const takeRoll = (token: string, index: number, mandalaId: string) => {
+const takeRoll = (token: string, index: number, mandalaId: string,) => {
     return http.post<any>(`/takeroll?t=${token}&i=${index}&m=${mandalaId}`);
+}
+
+// const takeSunRoll = (token: string, index: number, mandalaId: string, endDate?: string,) => {
+//     return http.post<any>(`/takeroll?t=${token}&i=${index}&m=${mandalaId}`);
+// }
+
+const takeSunRoll = (token: string, index: number, mandalaId: string, endDate?: Date,) => {
+    return http.post<Date>(`/takeroll?t=${token}&i=${index}&m=${mandalaId}`, endDate);
 }
 
 const getMandala = (mandalaId: string) => {
@@ -41,13 +49,15 @@ const addMandala = () => {
     return http.get<any>(`/addMandala`);
 }
 
-const addIdMandala = (mandalaId:string) => {
+const addIdMandala = (mandalaId: string) => {
     return http.get<any>(`/addMandala/${mandalaId}`);
 }
 
-const endMandala = (mandalaId:string)=>{
+const endMandala = (mandalaId: string) => {
     return http.delete<any>(`/deleteMandala/${mandalaId}`);
 }
+
+
 
 const MandalaService = {
     login,
@@ -57,6 +67,7 @@ const MandalaService = {
     getUsers,
     removeUser,
     takeRoll,
+    takeSunRoll,
     getMandala,
     getMandalas,
     addMandala,

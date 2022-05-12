@@ -3,7 +3,9 @@ import MandalaService from "../../services/MandalaService";
 import { Mandala } from "../../types/Mandala";
 import { PublicUser } from "../../types/PublicUser";
 import DrawMandala from "./DrawMandala";
+import { roles } from "./Roles";
 import TakeRole from "./TakeRole";
+import TakeSunRole from "./TakeSunRole";
 
 interface MandalasProps {
     publicUser: PublicUser;
@@ -15,6 +17,7 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
     const [mandala, setMandala] = useState<Mandala>();
     const [mandalas, setMandalas] = useState<Array<Mandala>>([]);
     const [takingRoll, setTakingRoll] = useState(NaN);
+    const [timeOut, setTimeOut] = useState(false);
 
     useEffect(() => {
         publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
@@ -71,12 +74,31 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
     }
 
     const handleRegister = () => {
-        mandala?.id &&
-            MandalaService.takeRoll(token, takingRoll, mandala.id);
-        setTakingRoll(NaN);
+        takingRoll === 0 ?
+            setTimeOut(true)
+            :
+            mandala?.id
+            && MandalaService.takeRoll(token, takingRoll, mandala.id,)
+            && setTakingRoll(NaN);
     }
 
     const handleCancel = () => {
+        setTakingRoll(NaN);
+        setTimeOut(false);
+    }
+
+    // const handleDate = (endDate: string) => {
+    //     console.log(endDate)
+    //     mandala?.id
+    //         && MandalaService.takeSunRoll(token, takingRoll, mandala.id, endDate);
+    //     setTimeOut(false);
+    // }
+
+    const handleDate = (endDate: Date) => {
+        console.log(endDate)
+        mandala?.id
+            && MandalaService.takeSunRoll(token, takingRoll, mandala.id, endDate);
+        setTimeOut(false);
         setTakingRoll(NaN);
     }
 
@@ -102,9 +124,13 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
                     </div>
                 </>
             }
+            {timeOut && <TakeSunRole
+                handleDate={handleDate}
+                handleCancel={handleCancel}
+            />}
             {(takingRoll || takingRoll === 0) &&
                 <TakeRole
-                    title=""
+                    title={roles[takingRoll]}
                     handleRegister={handleRegister}
                     handleCancel={handleCancel}
                 />}
