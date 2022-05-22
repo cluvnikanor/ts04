@@ -3,7 +3,7 @@ import MandalaService from "../../services/MandalaService";
 import { Mandala } from "../../types/Mandala";
 import { PublicUser } from "../../types/PublicUser";
 import DrawMandala from "./DrawMandala";
-import { roles } from "./Roles";
+import { roles } from "./CirclesData";
 import TakeRole from "./TakeRole";
 import TakeSunRole from "./TakeSunRole";
 
@@ -17,9 +17,12 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
     const [mandala, setMandala] = useState<Mandala>();
     const [mandalas, setMandalas] = useState<Array<Mandala>>([]);
     const [takingRoll, setTakingRoll] = useState(NaN);
-    const [timeOut, setTimeOut] = useState(false);
+    const [timingOut, setTimingOut] = useState(false);
+    const [selectedMandala, setSelectedMandala] = useState("");
+    const [confirm, setConfirm] = useState(false);
 
     useEffect(() => {
+        console.log('publicUser=', publicUser)
         publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
         mandala || retrieveMandalas();
     }, [publicUser]);
@@ -28,9 +31,12 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
     //     console.log('takingRoll=', takingRoll)
     // }, [takingRoll]);
 
-    // useEffect(() => {
-    //     console.log(mandala)
-    // }, [mandala]);
+    useEffect(() => {
+        console.log(mandala)
+        publicUser.mandalaIndex === 0
+            && !mandala?.timeOut
+            && setTimingOut(true);
+    }, [mandala]);
 
     // useEffect(() => {
     //     console.log(mandalas)
@@ -62,44 +68,58 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
         const mandalaIndex = parseInt(className);
         console.log('mandalaIndex=', mandalaIndex)
         console.log('mandala?.id=', mandala?.id)
-        console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex, 'mandala.userQuantity=', mandala?.userQuantity,)
+        console.log('publicUser.mandalaIndex=', publicUser.mandalaIndex)
+        console.log('mandala.userQuantity=', mandala?.userQuantity)
         if (mandala?.id
             && publicUser.id
             && (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
+            && !mandala.publicUsers[mandalaIndex].id
             && (mandala.userQuantity > 0 ||
                 (mandalaIndex === 0 && mandala.userQuantity === 0))
             && mandala.userQuantity < 15) {
             setTakingRoll(mandalaIndex);
+            setTimeout(() => retrieveMandala(mandala.id || ''), 500);
         }
     }
 
     const handleRegister = () => {
-        takingRoll === 0 ?
-            setTimeOut(true)
-            :
-            mandala?.id
-            && MandalaService.takeRoll(token, takingRoll, mandala.id,)
+        mandala?.id
+            && MandalaService.takeRole(token, takingRoll, mandala.id,)
             && setTakingRoll(NaN);
     }
 
     const handleCancel = () => {
         setTakingRoll(NaN);
-        setTimeOut(false);
+        setTimingOut(false);
     }
-
-    // const handleDate = (endDate: string) => {
-    //     console.log(endDate)
-    //     mandala?.id
-    //         && MandalaService.takeSunRoll(token, takingRoll, mandala.id, endDate);
-    //     setTimeOut(false);
-    // }
 
     const handleDate = (endDate: Date) => {
         console.log(endDate)
         mandala?.id
-            && MandalaService.takeSunRoll(token, takingRoll, mandala.id, endDate);
-        setTimeOut(false);
+            && MandalaService.takeSunRole(token, mandala.id, endDate);
+        setTimingOut(false);
         setTakingRoll(NaN);
+    }
+
+    const handleCheck = (id: string) => {
+        setSelectedMandala(id);
+    }
+
+    const handleDeleting = () => {
+        selectedMandala && setConfirm(prev => !prev);
+    }
+
+    const deleteMandala = () => {
+        setConfirm(prev => !prev);
+        MandalaService.endMandala(selectedMandala);
+        // setTimeout(() => {  window.location.reload(); }, 500);
+        setTimeout(() => retrieveMandalas(), 500);
+    }
+
+    const handleAddMandala = () => {
+        MandalaService.addMandala();
+        // setTimeout(() => {  window.location.reload(); }, 500);
+        setTimeout(() => retrieveMandalas(), 500);
     }
 
     return (
@@ -107,24 +127,70 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
             {isAdmin &&
                 <>
                     <h2>מנדלות</h2>
-                    <div className="btn-group-vertical" role="group" aria-label="Vertical button group">
-                        {mandalas?.map(m => (
+                    <table className="table table-dark">
+                        <tbody>
+                            {mandalas?.map(m => (
+                                <tr key={m.id}  >
+                                    <td>
+                                        <input
+                                            type="checkbox"
+                                            checked={m.id === selectedMandala}
+                                            onChange={() => handleCheck(m.id || '')}
+                                        />
+                                    </td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary"
+                                            onClick={() => handleChooseMandala(m.id as string)}
+                                        >
+                                            {m.userQuantity === 0 ?
+                                                'מנדלה חדשה'
+                                                :
+                                                m.publicUsers[0].name}
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {selectedMandala &&
+                        <button
+                            type="button"
+                            className="btn btn-warning"
+                            onClick={handleDeleting}
+                        >Delete
+                        </button>
+                    }
+                    {confirm &&
+                        <div className="alert alert-danger" role="alert">
+                            Are you sure?
                             <button
-                                key={m.id}
                                 type="button"
-                                className="btn btn-primary"
-                                onClick={() => handleChooseMandala(m.id as string)}
-                            >
-                                {m.userQuantity === 0 ?
-                                    'מנדלה חדשה'
-                                    :
-                                    m.publicUsers[0].name}
+                                className="btn btn-danger"
+                                onClick={deleteMandala}
+                            >Delete
                             </button>
-                        ))}
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                onClick={() => handleDeleting()}
+                            >Cancel
+                            </button>
+                        </div>}
+                    <div>
+                        <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={() => handleAddMandala()}
+                        >
+                            הוספת מנדלה
+                        </button>
                     </div>
                 </>
             }
-            {timeOut && <TakeSunRole
+
+            {timingOut && <TakeSunRole
                 handleDate={handleDate}
                 handleCancel={handleCancel}
             />}

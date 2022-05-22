@@ -5,20 +5,10 @@ import TakeRole from './TakeRole';
 
 
 function CircleButton({ className, color, left, top, title, isActive, publicUser, register, }: CircleButtonProps) {
-    const [showRegistration, setShowRegistration] = useState(false);
 
     let backgroundColor = isActive ? color : 'grey';
     const buttonTitle = publicUser.id ? `${publicUser.name}\n${title}` : title;
 
-    // const handleCancel = () => {
-    //     setShowRegistration(false);
-    // }
-
-    // const handleClick = () => {
-    //     // canRegister &&
-    //     (publicUser.mandalaIndex > 14 || publicUser.mandalaIndex < 0)
-    //         && setShowRegistration(true);
-    // }
     const handleClick = () => {
         register(className);
     }

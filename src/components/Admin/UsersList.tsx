@@ -40,6 +40,7 @@ function UsersList({ token, isAdmin, }: UsersListToolsProps) {
     const deleteUser = () => {
         setConfirm(prev => !prev);
         MandalaService.removeUser(users[selectedUser].id, token);
+        setTimeout(() => retrieveUsers(), 500);
     }
 
     return (
