@@ -67,11 +67,13 @@ function UsersList({ token, isAdmin, }: UsersListToolsProps) {
                                     {/* <td>{user.name}</td> */}
                                     <td><a href={user.site} className="link-primary">{user.name}</a></td>
                                     {isAdmin &&
-                                        <td><input
-                                            type="checkbox"
-                                            checked={index === selectedUser}
-                                            onChange={() => handleCheck(index)}
-                                        /></td >
+                                        <td width='20'>
+                                            <input
+                                                type="checkbox"
+                                                checked={index === selectedUser}
+                                                onChange={() => handleCheck(index)}
+                                            />
+                                        </td >
                                     }
                                 </tr>
                             ))}

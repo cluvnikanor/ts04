@@ -132,13 +132,6 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
                             {mandalas?.map(m => (
                                 <tr key={m.id}  >
                                     <td>
-                                        <input
-                                            type="checkbox"
-                                            checked={m.id === selectedMandala}
-                                            onChange={() => handleCheck(m.id || '')}
-                                        />
-                                    </td>
-                                    <td>
                                         <button
                                             type="button"
                                             className="btn btn-primary"
@@ -149,6 +142,13 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
                                                 :
                                                 m.publicUsers[0].name}
                                         </button>
+                                    </td>
+                                    <td width='20'>
+                                        <input
+                                            type="checkbox"
+                                            checked={m.id === selectedMandala}
+                                            onChange={() => handleCheck(m.id || '')}
+                                        />
                                     </td>
                                 </tr>
                             ))}
