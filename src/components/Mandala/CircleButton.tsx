@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { FaPlusCircle } from "react-icons/fa"
 import { CircleButtonProps } from './CircleButtonProps';
-import TakeRole from './TakeRole';
-
 
 function CircleButton({ className, color, left, top, title, isActive, publicUser, register, }: CircleButtonProps) {
 

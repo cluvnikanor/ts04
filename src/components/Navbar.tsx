@@ -1,14 +1,19 @@
 import { Link } from "react-router-dom";
 
 interface NavbarProps {
-  headerMessage: string;
+  navbarMessage: string;
   isLogin: boolean;
   logout: () => void;
 }
 
-function Navbar({ headerMessage, isLogin, logout }: NavbarProps) {
+function Navbar({ navbarMessage, isLogin, logout }: NavbarProps) {
 
   const links = [
+    {
+      id: 5,
+      path: '/users',
+      text: 'משתמשים',
+    },
     {
       id: 3,
       path: '/mandala',
@@ -20,9 +25,14 @@ function Navbar({ headerMessage, isLogin, logout }: NavbarProps) {
       text: isLogin ? 'יציאה' : 'כניסה',
     },
     {
-      id: 5,
-      path: '/Admin',
-      text: 'משתמשים',
+      id: 2,
+      path: '/',
+      text: 'בית',
+    },
+    {
+      id: 1,
+      path: '/user',
+      text: 'שלום ' + navbarMessage,
     },
   ]
 
@@ -45,7 +55,7 @@ function Navbar({ headerMessage, isLogin, logout }: NavbarProps) {
             }
           </li>
         )}
-        {headerMessage}
+        {/* {navbarMessage} */}
       </div>
     </nav>
   )

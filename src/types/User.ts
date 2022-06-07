@@ -4,6 +4,7 @@ export class User {
     site = '';
     mandalaId = '';
     mandalaIndex = -1;
+    phone = '';
     email = '';
     password = '';
 
@@ -13,6 +14,7 @@ export class User {
         site?: string,
         mandalaId?: string,
         mandalaIndex?: number,
+        phone?: string,
         email?: string,
         password?: string,
     ) {
@@ -21,6 +23,7 @@ export class User {
         this.site = site ? site : '';
         this.mandalaId = mandalaId ? mandalaId : '';
         this.mandalaIndex = mandalaIndex ? mandalaIndex : -1;
+        this.phone = phone ? phone : '';
         this.email = email ? email : '';
         this.password = password ? password : '';
     }

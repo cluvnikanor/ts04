@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MandalaService from "../../services/MandalaService";
 import { Mandala } from "../../types/Mandala";
 import { PublicUser } from "../../types/PublicUser";
@@ -6,14 +6,13 @@ import DrawMandala from "./DrawMandala";
 import { roles } from "./CirclesData";
 import TakeRole from "./TakeRole";
 import TakeSunRole from "./TakeSunRole";
+import { appContext, IAppContext } from "../../AppContext";
 
 interface MandalasProps {
     publicUser: PublicUser;
-    token: string;
-    isAdmin: boolean;
 }
 
-function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
+function Mandalas({ publicUser, }: MandalasProps) {
     const [mandala, setMandala] = useState<Mandala>();
     const [mandalas, setMandalas] = useState<Array<Mandala>>([]);
     const [takingRoll, setTakingRoll] = useState(NaN);
@@ -21,26 +20,19 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
     const [selectedMandala, setSelectedMandala] = useState("");
     const [confirm, setConfirm] = useState(false);
 
+    const {isAdmin, token} : IAppContext= useContext(appContext);
+
     useEffect(() => {
         console.log('publicUser=', publicUser)
         publicUser.mandalaId && retrieveMandala(publicUser.mandalaId);
         mandala || retrieveMandalas();
     }, [publicUser]);
 
-    // useEffect(() => {
-    //     console.log('takingRoll=', takingRoll)
-    // }, [takingRoll]);
-
     useEffect(() => {
-        console.log(mandala)
         publicUser.mandalaIndex === 0
             && !mandala?.timeOut
             && setTimingOut(true);
     }, [mandala]);
-
-    // useEffect(() => {
-    //     console.log(mandalas)
-    // }, [mandalas]);
 
     const retrieveMandalas = () => {
         MandalaService.getMandalas()
@@ -112,13 +104,11 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
     const deleteMandala = () => {
         setConfirm(prev => !prev);
         MandalaService.endMandala(selectedMandala);
-        // setTimeout(() => {  window.location.reload(); }, 500);
         setTimeout(() => retrieveMandalas(), 500);
     }
 
     const handleAddMandala = () => {
         MandalaService.addMandala();
-        // setTimeout(() => {  window.location.reload(); }, 500);
         setTimeout(() => retrieveMandalas(), 500);
     }
 
@@ -159,23 +149,23 @@ function Mandalas({ publicUser, token, isAdmin, }: MandalasProps) {
                             type="button"
                             className="btn btn-warning"
                             onClick={handleDeleting}
-                        >Delete
+                        >מחיקה
                         </button>
                     }
                     {confirm &&
                         <div className="alert alert-danger" role="alert">
-                            Are you sure?
+                            למחוק את המנדלה?
                             <button
                                 type="button"
                                 className="btn btn-danger"
                                 onClick={deleteMandala}
-                            >Delete
+                            >כן, למחוק
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-secondary"
                                 onClick={() => handleDeleting()}
-                            >Cancel
+                            >ביטול
                             </button>
                         </div>}
                     <div>

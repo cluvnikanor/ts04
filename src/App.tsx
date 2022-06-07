@@ -10,25 +10,24 @@ import MandalaService from './services/MandalaService';
 import Mandalas from './components/Mandala/Mandalas';
 import { PublicUser } from './types/PublicUser';
 import { useNavigate } from 'react-router';
-
+import StartPage from './components/StartPage';
+import AdminPage from './components/Admin/AdminPage';
+import { appContext, IAppContext } from './AppContext';
 
 function App() {
 
   const [user, setUser] = useState(new User());
   const [token, setToken] = useState('');
-  const [headerMessage, setHeaderMessage] = useState('שלום אורח');
+  const [navbarMessage, setNavbarMessage] = useState('אורחת');
+  // const [startPageData, setStartPageData] = useState(new StartPageData('ברוכה הבאה לעולם המנדלות'));
   const [isAdmin, setIsAdmin] = useState(false);
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   setToken(localStorage.getItem("token") || '');
-  //   retrieveUser(localStorage.getItem("token") || '');
-  // }, []);
-
-   useEffect(() => {
-        console.log('isAdmin=', isAdmin)
-    }, [isAdmin]);
+  const context1Provider: IAppContext = {
+    isAdmin: isAdmin,
+    token: token,
+  }
 
   useEffect(() => {
     localStorage.getItem("isAdmin") === 'true' && setIsAdmin(true);
@@ -54,8 +53,8 @@ function App() {
         .then((response: any) => {
           setUser(response.data);
           response.data.name ?
-            setHeaderMessage('שלום ' + response.data.name)
-            : setHeaderMessage('שלום אורח');
+            setNavbarMessage(response.data.name)
+            : setNavbarMessage('אורחת');
         })
         .catch((e: Error) =>
           console.log(e));
@@ -67,6 +66,11 @@ function App() {
     setToken(token);
   }
 
+  // const handleStartPage = (startPageData: StartPageData) => {
+  //   console.log(startPageData.h1)
+  //   setStartPageData(startPageData);
+  // }
+
   const handleIsAdmin = (isAdminLogged: boolean) => {
     setIsAdmin(isAdminLogged);
   }
@@ -75,7 +79,7 @@ function App() {
       MandalaService.logout(token);
       setToken('');
       setUser(new User());
-      setHeaderMessage('שלום אורח');
+      setNavbarMessage('אורחת');
       localStorage.setItem("token", '');
       setIsAdmin(false);
       localStorage.setItem("isAdmin", `${false}`);
@@ -85,56 +89,63 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <Navbar
-          headerMessage={headerMessage}
-          isLogin={token ? true : false}
-          logout={logout}
-        />
-        <div className="container mt-3">
-          <Routes>
-            {
-              token ?
-                ["/", "/mandala", "/login"].map((path, index) => {
-                  return (
-                    <Route path={path} element={
-                      <Mandalas
-                        publicUser={user as PublicUser}
-                        token={token}
-                        isAdmin={isAdmin}
-                      />}
-                      key={index}
-                    />
-                  );
-                })
-                :
-                ["/", "/login"].map((path, index) => {
-                  return (
-                    <Route path={path} element={
-                      <Login
-                        getToken={handleToken}
-                        handleIsAdmin={handleIsAdmin}
-                      />}
-                      key={index}
-                    />
-                  );
-                })
-            }
-            <Route path="/admin" element={
-              <UsersList
-                token={token}
-                isAdmin={isAdmin}
-              />} />
-            <Route path="/mandala" element={
-              <Mandalas
-                publicUser={user as PublicUser}
-                token={token}
-                isAdmin={isAdmin}
-              />} />
-          </Routes>
-        </div>
-        {/* <p>{message}</p> */}
-      </header>
+      <appContext.Provider value={context1Provider}>
+        <header className="App-header">
+          <Navbar
+            navbarMessage={navbarMessage}
+            isLogin={token ? true : false}
+            logout={logout}
+          />
+          <div className="container mt-3">
+            <Routes>
+              {["*", "/"].map((path, index) => {
+                return (
+                  <Route path={path} element={
+                    <StartPage
+                    // h1={startPageData.h1}
+                    />}
+                    key={index}
+                  />
+                );
+              })}
+              {
+                token ?
+                  ["/login"].map((path, index) => {
+                    return (
+                      <Route path={path} element={
+                        <StartPage />}
+                        key={index}
+                      />
+                    );
+                  })
+                  :
+                  ["/login"].map((path, index) => {
+                    return (
+                      <Route path={path} element={
+                        <Login
+                          getToken={handleToken}
+                          handleIsAdmin={handleIsAdmin}
+                        />}
+                        key={index}
+                      />
+                    );
+                  })
+              }
+              <Route path="/user" element={
+                isAdmin &&
+                <AdminPage />} />
+              <Route path="/users" element={
+                <UsersList />} />
+              <Route path="/mandala" element={
+                <Mandalas
+                  publicUser={user as PublicUser} />} />
+              <Route path="/mandala" element={
+                <Mandalas
+                  publicUser={user as PublicUser} />} />
+            </Routes>
+          </div>
+        </header>
+      </appContext.Provider>
     </div>
   );
 }

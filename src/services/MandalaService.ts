@@ -1,4 +1,5 @@
 import http from "../http-common";
+import { StartPageData } from "../types/StartPageData";
 import { User } from "../types/User";
 
 const login = (email: string, password: string) => {
@@ -17,8 +18,16 @@ const getUser = (token: string) => {
     return http.get<any>(`/user?t=${token}`);
 }
 
-const getUsers = () => {
-    return http.get<any>(`/viewUsers`);
+const getPublicUsers = () => {
+    return http.get<any>(`/viewPublicUsers`);
+}
+
+const getAllUsers = (adminToken: string) => {
+    return http.get<any>(`/viewAllUsers?t=${adminToken}`);
+}
+
+const getDeletedUsers = (adminToken: string) => {
+    return http.get<any>(`/viewDeletedUsers?t=${adminToken}`);
 }
 
 const removeUser = (id: any, adminToken: string) => {
@@ -53,14 +62,22 @@ const endMandala = (mandalaId: string) => {
     return http.delete<any>(`/deleteMandala/${mandalaId}`);
 }
 
+const getStartPage = () => {
+    return http.get<any>(`/startPage`);
+}
 
+const updateStartPage = (adminToken: string, startPageData: StartPageData) => {
+    return http.post<User>(`/updateStartPage?t=${adminToken}`, startPageData);
+}
 
 const MandalaService = {
     login,
     register,
     logout,
     getUser,
-    getUsers,
+    getAllUsers,
+    getPublicUsers,
+    getDeletedUsers,
     removeUser,
     takeRole,
     takeSunRole,
@@ -69,6 +86,8 @@ const MandalaService = {
     addMandala,
     addIdMandala,
     endMandala,
+    getStartPage,
+    updateStartPage,
 }
 
 export default MandalaService;

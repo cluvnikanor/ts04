@@ -52,14 +52,14 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
         console.log(responseDataMessage)
         switch (responseDataMessage) {
             case "Username or password incorrect":
-                setLoginMessage('שם משתמש או סיסמה לא נכונים');
+                setLoginMessage('שם משתמשת או סיסמה לא נכונים');
                 break;
             case "Hello Admin":
                 handleIsAdmin(true);
                 localStorage.setItem("isAdmin", `${true}`);
                 break;
             case "Can't add user: email is used":
-                setLoginMessage('שם משתמש כבר בשימוש');
+                setLoginMessage('שם משתמשת כבר בשימוש');
                 break;
         }
     }
@@ -74,12 +74,12 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
     }
 
     const registerUser = () => {
-            input.email && input.password && input.name && input.site &&
-                MandalaService.register(input)
-                    .then((response: any) => {
-                        getToken(response.data.token);
-                        handleLoginMessage(response.data.message);
-                    })
+        input.email && input.password && input.name && input.site &&
+            MandalaService.register(input)
+                .then((response: any) => {
+                    getToken(response.data.token);
+                    handleLoginMessage(response.data.message);
+                })
     }
 
     return (
@@ -101,7 +101,8 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                                 placeholder="שם"
                                 value={input.name}
                                 onChange={handleInputChange} />
-                        </div><div className="form-group">
+                        </div>
+                        <div className="form-group">
                             <label htmlFor="exampleInputEmail1">
                                 אתר
                             </label>
@@ -111,22 +112,46 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                                 id="site"
                                 placeholder="אתר"
                                 value={input.site}
-                                onChange={handleInputChange} />
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="exampleInputEmail1">
+                                טלפון
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="phone"
+                                aria-describedby="phoneHelp"
+                                placeholder="מספר טלפון"
+                                value={input.phone}
+                                onChange={handleInputChange}
+                            />
+                            <small id="phoneHelp" className="form-text text-muted"
+                            >מספר הטלפון גלוי רק למנהלות האתר
+                            </small>
                         </div>
                     </>
                 }
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">
-                        שם משתמש
+                        שם משתמשת
                     </label>
                     <input
                         type="email"
                         className="form-control"
                         id="email"
-                        placeholder="שם משתמש"
+                        aria-describedby="emailHelp"
+                        placeholder='כתובת דוא"ל'
                         value={input.email}
                         onChange={handleInputChange}
                     />
+                    {registering &&
+                        <small id="emailHelp" className="form-text text-muted"
+                        >כתובת דוא"ל שגלויה רק למנהלות האתר
+                        </small>
+                    }
                 </div>
 
                 <div className="form-group">
