@@ -1,4 +1,5 @@
 import http from "../http-common";
+import { PublicUser } from "../types/PublicUser";
 import { StartPageData } from "../types/StartPageData";
 import { User } from "../types/User";
 
@@ -22,8 +23,16 @@ const getPublicUsers = () => {
     return http.get<any>(`/viewPublicUsers`);
 }
 
+const getMandalaUsers = (mandalaId: string, token: string) => {
+    return http.get<any>(`/viewMandalaUsers?id=${mandalaId}&t=${token}`);
+}
+
 const getAllUsers = (adminToken: string) => {
     return http.get<any>(`/viewAllUsers?t=${adminToken}`);
+}
+
+const getFreeUsers = (adminToken: string) => {
+    return http.get<any>(`/viewFreeUsers?t=${adminToken}`);
 }
 
 const getDeletedUsers = (adminToken: string) => {
@@ -50,16 +59,12 @@ const getMandalas = () => {
     return http.get<any>(`/mandalas`);
 }
 
-const addMandala = () => {
-    return http.get<any>(`/addMandala`);
+const addMandala = (adminToken: string, sun: PublicUser) => {
+    return http.post<PublicUser>(`/addMandala?t=${adminToken}`, sun);
 }
 
-const addIdMandala = (mandalaId: string) => {
-    return http.get<any>(`/addMandala/${mandalaId}`);
-}
-
-const endMandala = (mandalaId: string) => {
-    return http.delete<any>(`/deleteMandala/${mandalaId}`);
+const endMandala = (mandalaId: string, token: string) => {
+    return http.delete<any>(`/deleteMandala?id=${mandalaId}&t=${token}`);
 }
 
 const getStartPage = () => {
@@ -67,7 +72,7 @@ const getStartPage = () => {
 }
 
 const updateStartPage = (adminToken: string, startPageData: StartPageData) => {
-    return http.post<User>(`/updateStartPage?t=${adminToken}`, startPageData);
+    return http.post<StartPageData>(`/updateStartPage?t=${adminToken}`, startPageData);
 }
 
 const MandalaService = {
@@ -76,7 +81,9 @@ const MandalaService = {
     logout,
     getUser,
     getAllUsers,
+    getFreeUsers,
     getPublicUsers,
+    getMandalaUsers,
     getDeletedUsers,
     removeUser,
     takeRole,
@@ -84,7 +91,6 @@ const MandalaService = {
     getMandala,
     getMandalas,
     addMandala,
-    addIdMandala,
     endMandala,
     getStartPage,
     updateStartPage,

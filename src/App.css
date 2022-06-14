@@ -1,5 +1,5 @@
 .App {
-  text-align: right;
+  text-align: center;
 }
 
 .App-logo {
@@ -39,14 +39,14 @@
 }
 
 .nav {
-  position: fixed;
-  left: 40px;
+  position: relative;
+  /* left: 40px; */
   top: 40px;
 }
 
 form {
-  position: fixed;
-  right: 33px;
+  position: relative;
+  /* right: 33px; */
   margin: 0 auto;
   width: 100%;
   max-width: 400px;

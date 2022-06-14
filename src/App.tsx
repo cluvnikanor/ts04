@@ -13,13 +13,13 @@ import { useNavigate } from 'react-router';
 import StartPage from './components/StartPage';
 import AdminPage from './components/Admin/AdminPage';
 import { appContext, IAppContext } from './AppContext';
+import UserPage from './components/Admin/UserPage';
 
 function App() {
 
   const [user, setUser] = useState(new User());
   const [token, setToken] = useState('');
   const [navbarMessage, setNavbarMessage] = useState('אורחת');
-  // const [startPageData, setStartPageData] = useState(new StartPageData('ברוכה הבאה לעולם המנדלות'));
   const [isAdmin, setIsAdmin] = useState(false);
 
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     console.log('in useEffect[token]: token=', token);
     token === 'undefined' && setToken('');
-    token && retrieveUser(token);
+    token !== '' && retrieveUser(token);
   }, [token]);
 
   const retrieveUser = (token: string) => {
@@ -101,39 +101,31 @@ function App() {
               {["*", "/"].map((path, index) => {
                 return (
                   <Route path={path} element={
-                    <StartPage
-                    // h1={startPageData.h1}
-                    />}
+                    <StartPage />}
                     key={index}
                   />
                 );
               })}
               {
                 token ?
-                  ["/login"].map((path, index) => {
-                    return (
-                      <Route path={path} element={
-                        <StartPage />}
-                        key={index}
-                      />
-                    );
-                  })
+                  <Route path={"/login"} element={
+                    <StartPage />} />
                   :
-                  ["/login"].map((path, index) => {
-                    return (
-                      <Route path={path} element={
-                        <Login
-                          getToken={handleToken}
-                          handleIsAdmin={handleIsAdmin}
-                        />}
-                        key={index}
-                      />
-                    );
-                  })
+                  <Route path={"/login"} element={
+                    <Login
+                      getToken={handleToken}
+                      handleIsAdmin={handleIsAdmin}
+                    />} />
               }
               <Route path="/user" element={
-                isAdmin &&
-                <AdminPage />} />
+                token ?
+                  isAdmin ?
+                    <AdminPage />
+                    :
+                    <UserPage />
+                  :
+                  <StartPage />
+              } />
               <Route path="/users" element={
                 <UsersList />} />
               <Route path="/mandala" element={

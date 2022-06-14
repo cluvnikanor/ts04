@@ -98,9 +98,13 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                                 type="text"
                                 className="form-control"
                                 id="name"
+                                aria-describedby="nameHelp"
                                 placeholder="שם"
                                 value={input.name}
                                 onChange={handleInputChange} />
+                            <small id="nameHelp" className="form-text text-muted"
+                            >השם שלך גלוי לכל משתמשי האתר
+                            </small>
                         </div>
                         <div className="form-group">
                             <label htmlFor="exampleInputEmail1">
@@ -114,6 +118,9 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                                 value={input.site}
                                 onChange={handleInputChange}
                             />
+                            <small id="siteHelp" className="form-text text-muted"
+                                >האתר העסקי שלך גלוי לכל משתמשי האתר
+                                </small>
                         </div>
                         <div className="form-group">
                             <label htmlFor="exampleInputEmail1">
@@ -166,6 +173,11 @@ function Login({ getToken, handleIsAdmin }: LoginProps) {
                         value={input.password}
                         onChange={handleInputChange}
                     />
+                    {registering &&
+                        <small id="passwordHelp" className="form-text text-muted"
+                        >הסיסמה אישית וגלויה רק לך
+                        </small>
+                    }
                 </div>
                 {loginMessage &&
                     <p className="warningMessage">{loginMessage}</p>

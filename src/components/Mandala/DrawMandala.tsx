@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Line } from 'react-lineto';
 import { Mandala } from '../../types/Mandala';
 import CircleButton from './CircleButton';
@@ -9,9 +8,10 @@ import { circlesInitLeft, circlesInitTop, colors, roles } from './CirclesData';
 interface drawMandalaProps {
     mandala: Mandala;
     register: (className: string) => void;
+    handleClose: () => void;
 }
 
-function DrawMandala({ mandala, register }: drawMandalaProps) {
+function DrawMandala({ mandala, register, handleClose }: drawMandalaProps) {
 
     const style = {
         className: 'line',
@@ -85,6 +85,10 @@ function DrawMandala({ mandala, register }: drawMandalaProps) {
         drawLine(circles[10], circles[14], circleRadius),
     ]
 
+    const handleBack = () => {
+        handleClose();
+    }
+
     return (
         <>
             {lines.map(i => (
@@ -118,6 +122,13 @@ function DrawMandala({ mandala, register }: drawMandalaProps) {
                 style={{ fontSize: '18px', }}>
                 {mandala.timeOut && `${mandala.timeOut}`.substring(0, 10)}
             </p>
+            <button
+                type="submit"
+                className="btn btn-primary"
+                onClick={handleBack}
+            >
+                חזרה
+            </button>
         </>
     )
 }
